@@ -1,0 +1,67 @@
+<div class="space-setup">
+    <div class="space-setup__card">
+        <div class="space-setup__content">
+            <div class="space-setup__content__header">
+                <p class="space-setup__content__header-title">SPACE SETUP</p>
+            </div>
+
+            <div class="space-setup__layout">
+                <div class="space-setup__layout__tabs">
+                    <div
+                        *ngFor="let item of floorPlans; let i = index" 
+                        class="space-setup__layout__tab-item"
+                        [class.--active-tab]="i === activeTabIndex"
+                        (click)="handleTabChange(i)">
+                        <p class="space-setup__layout__tab-item__title">{{item.isUploaded ? '[Uploaded] ' : ''}}{{item.fileName}}</p>
+                        <div class="space-setup__status" [class.--next]="!item.isUploaded" ></div>
+                    </div>
+                </div>
+
+                <div class="space-setup__layout__content">
+                    <div class="space-setup__layout__content-preview">
+                        <div class="space-setup__layout__content-preview__svg">
+                            <div>
+                                <img [src]="floorPlans[activeTabIndex].file" alt='floor-plan' />
+                            </div>
+                        </div>
+                        <div class="space-setup__layout__content-preview__tip">
+                            <p><b>TIP: </b> Clicking a space from the floor plan map will show its space profile on the left information panel.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-setup__layout__content-details">
+                        <div class="space-setup__layout__content-details__space-count --wrapper">
+                            <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
+                            <div class="space-setup__layout__content-details__space-count__legend" *ngFor="let legend of floorPlans[activeTabIndex].legends;">
+                                <div
+                                    class="space-setup__layout__content-details__space-count__legend-color"
+                                    [ngClass]="{'--flexible': legend.type === 'flexible', '--unassigned': legend.type === 'unassigned', '--blocked': legend.type === 'blocked', '--fixed': legend.type === 'fixed'}"></div>
+                                <div><b>{{legend.total}}</b> {{legend.type}}</div>
+                            </div>
+                        </div>
+
+                        <div class="space-setup__layout__content-details__space-changes --wrapper">
+                            <div class="space-setup__layout__content-details__title">SPACES CHANGES</div>
+
+                            <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
+                                <div>
+                                    <p>{{change.fileName}}</p>
+                                    <div class="space-setup__status --small --next"></div>
+                                </div>
+                                <ul>
+                                    <li>{{change.removedCount}} spaces removed</li>
+                                    <li>{{change.addedCount}} spaces added</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-setup__buttons">
+            <button>PREVIOUS</button>
+            <button>SAVE & CONTINUE</button>
+        </div>
+    </div>
+</div>

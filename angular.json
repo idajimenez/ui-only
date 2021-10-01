@@ -28,7 +28,18 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/dummy",
+              {
+                "glob": "font-awesome.css",
+                "input": "local-npm-packages/font-awesome/css",
+                "output": "/assets/styles/css"
+              },
+              {
+                "glob": "*",
+                "input": "local-npm-packages/font-awesome/fonts",
+                "output": "/assets/styles/fonts"
+              }
             ],
             "styles": [
               "src/styles.scss"

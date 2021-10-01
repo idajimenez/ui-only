@@ -1,0 +1,65 @@
+<div class="floor-plan-preview">
+    <div class="floor-plan-preview__card">
+        <div class="floor-plan-preview__content">
+            <div class="floor-plan-preview__content__header">
+                <p class="floor-plan-preview__content__header-title">FLOOR PLAN REVIEW</p>
+            </div>
+
+            <div class="floor-plan-preview__layout">
+                <div class="floor-plan-preview__layout__tabs">
+                    <div
+                        *ngFor="let item of floorPlans; let i = index" 
+                        class="floor-plan-preview__layout__tab-item"
+                        [class.--active-tab]="i === activeTabIndex"
+                        (click)="handleTabChange(i)">
+                        <p class="floor-plan-preview__layout__tab-item__title">{{item.isUploaded ? '[Uploaded] ' : ''}}{{item.fileName}}</p>
+                        <div class="floor-plan-preview__status" [class.--next]="!item.isUploaded" ></div>
+                    </div>
+                </div>
+
+                <div class="floor-plan-preview__layout__content">
+                    <div class="floor-plan-preview__layout__content-preview">
+                        <div class="floor-plan-preview__layout__content-preview__svg">
+                            <div>
+                                <img [src]="floorPlans[activeTabIndex].file" alt='floor-plan' />
+                            </div>
+                        </div>
+                        <div class="floor-plan-preview__layout__content-preview__tip">
+                            <p><b>TIP: </b> Clicking a space from the floor plan map will show its space profile on the left information panel.</p>
+                        </div>
+                    </div>
+
+                    <div class="floor-plan-preview__layout__content-details">
+                        <div class="floor-plan-preview__layout__content-details__space-count --wrapper">
+                            <div class="floor-plan-preview__layout__content-details__title">SPACES COUNT</div>
+                            <div class="floor-plan-preview__layout__content-details__space-count__legend">
+                                <div class="floor-plan-preview__layout__content-details__space-count__legend-color --purple"></div>
+                                <div><b>{{floorPlans[activeTabIndex].spaceCount}}</b> Spaces</div>
+                            </div>
+                        </div>
+
+                        <div class="floor-plan-preview__layout__content-details__space-changes --wrapper">
+                            <div class="floor-plan-preview__layout__content-details__title">SPACES CHANGES</div>
+
+                            <div class="floor-plan-preview__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
+                                <div>
+                                    <p>{{change.fileName}}</p>
+                                    <div class="floor-plan-preview__status --small --next"></div>
+                                </div>
+                                <ul>
+                                    <li>{{change.removedCount}} spaces removed</li>
+                                    <li>{{change.addedCount}} spaces added</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="floor-plan-preview__buttons">
+            <button>PREVIOUS</button>
+            <button>SAVE & CONTINUE</button>
+        </div>
+    </div>
+</div>

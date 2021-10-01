@@ -1,0 +1,124 @@
+
+.custom-tab {
+    &__content {
+        display: flex;
+        align-items: center;
+
+        &__tab {
+            &-item {
+                text-align: center;
+                border: 1px solid #460073;
+                border-radius: 3px;
+                flex: 1;
+                font-family: Graphik;
+                font-size: 14px;
+                color: #460073;
+                font-weight: 600;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:not(:last-of-type) {
+                    margin-right: 3px;
+                }
+
+                &.--active-tab {
+                    color: #fff;
+                    background-color: #460073;
+                }
+            }
+        }
+    }
+
+    .mat-tab-label {
+        text-align: center;
+        border: 1px solid #460073 !important;
+        border-radius: 3px !important;
+
+        &-content {
+            font-family: Graphik !important;
+            font-size: 14px !important;
+            color: #460073 !important;
+            font-weight: 600 !important;
+        }
+
+        &-active {
+            color: #fff !important;
+        }
+    }
+
+    .mat-ink-bar {
+        background-color: #460073 !important;
+        height: 100% !important;
+        border-radius: 3px !important;
+        z-index: -1 !important;
+    }
+}
+
+.tabs-container {
+    width: 1024px!important;
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #ddd;
+    flex: 1;
+}
+
+.nav {
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.projDetailsTab {
+    height: 50px;
+    -o-object-fit: contain;
+    object-fit: contain;
+    background-color: #fff;
+    margin-right: 2px;
+    flex: 1;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+
+.projDetailsLink {
+    height: 50px;
+    font-family: Graphik;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #460073;
+    padding-top: 17px;
+    border: 1px solid #460073;
+    border-radius: 3px;
+    pointer-events: none;
+
+    &.active {
+        color: #fff !important;
+        background-color: #460073;
+        border-radius: 4px;
+    }
+}
+
+.nav-link.disabled {
+    background-color: transparent;
+    border: 1px solid #460073;
+    border-radius: 3px;
+    cursor: default!important;
+    color: #460073;
+}
+
+::ng-deep .mat-tab-body-wrapper{
+    margin: 0px -527px 0px -515px !important;
+}

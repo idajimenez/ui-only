@@ -1,0 +1,43 @@
+<div class="custom-tab">
+  <!-- <ul class="nav nav-tabs tabsContainer" role="tablist" >
+    <li class="nav-item projDetailsTab" *ngFor="let item of items; let i = index">
+      <div (click)="onClickTab(i)">
+        <span
+            class="nav-link projDetailsLink"
+            [class.active]="i === activeIndex"
+            role="tab" data-toggle="tab">
+            {{item.title}}
+        </span>
+      </div>
+    </li>
+  </ul> -->
+
+    <div class="custom-tab__content">
+        <div
+            *ngFor="let item of items; let i = index" 
+            class="custom-tab__content__tab-item"
+            [class.--active-tab]="i === activeIndex"
+            (click)="onClickTab(i)">
+            <p class="custom-tab__content__tab-title">{{item.isUploaded ? '[Uploaded] ' : ''}}{{item.title}}</p>
+            <!-- <div class="app-tab__conten__tab-status" [class.--next]="!item.isUploaded" ></div> -->
+        </div>
+    </div>
+<!-- 
+  <mat-tab-group>
+    <mat-tab label="First">
+      <app-floor-plan-details></app-floor-plan-details>
+    </mat-tab>
+    <mat-tab label="Second">
+      <app-preview-floor-plan></app-preview-floor-plan>
+    </mat-tab>
+    <mat-tab label="Third"> 
+     <app-space-setup></app-space-setup>
+    </mat-tab>
+    <mat-tab label="Fourth"> 
+      <app-preview-floor-plan></app-preview-floor-plan>
+     </mat-tab>
+  </mat-tab-group> -->
+  <!-- <div class="app-tabs__content">
+    <ng-content></ng-content>
+  </div> -->
+</div>

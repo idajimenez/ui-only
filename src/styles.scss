@@ -1,1 +1,29 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
 /* You can add global styles to this file, and also import other style files */
+$--dark-purple-460073: #460073;
+$--light-purple-7500c0: #7500C0;
+$--selection-purple-a100ff: #A100FF;
+$--notice-red-e34c4c: #E34C4C;
+$--status-yellow-f7b422: #F7B422;
+$--status-green-01d801: #01D801;
+$--notice-blue-0275d8: #0275D8;
+$--notice-red-bg-eb4e4e-5-: #EB4E4E;
+$--status-yellow-f7b422-5: #F7B422;
+$--status-green-01d801-5: #01D801;
+$--notice-blue-0275d8-5: #0275D8;
+$--heavy-text-gray-212529: #212529;
+$--common-text-gray-333333: #333333;
+$--light-text-gray-464a4c: #464A4C;
+$--disabled-text-6c757d: #6C757D;
+$--placeholder-text-999999: #999999;
+$--hidden-text-bac3ca: #BAC3CA;
+$--main-border-disabled-bg-ced4da: #CED4DA;
+$--selection-hover-f4f4f4: #F4F4F4;
+$--light-gray-bg-f7f7f9: #F7F7F9;
+$--universal-white-ffffff: #FFFFFF;
