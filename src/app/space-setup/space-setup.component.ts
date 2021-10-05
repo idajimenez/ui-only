@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import axios from 'axios';
 
 @Component({
     selector: 'app-space-setup',
@@ -22,7 +24,7 @@ export class SpaceSetupComponent implements OnInit {
             removedCount: 50,
             addedCount: 3
         }],
-        file: 'https://cdn.shopify.com/s/files/1/0269/1435/t/1/assets/Freesample.png?21088'
+        file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }, {
         fileName: 'FacilityA_FL1_09-01-2020',
         isUploaded: false,
@@ -39,10 +41,35 @@ export class SpaceSetupComponent implements OnInit {
         }],
         file: 'https://cdn.shopify.com/s/files/1/0269/1435/t/1/assets/Freesample.png?21088'
     }];
+    // public svgPreview: 
 
-    constructor() { }
+    constructor(private sanitizer: DomSanitizer) { }
 
     ngOnInit(): void {
+        this.downloadSvg();
+    }
+
+    public async downloadSvg() {
+        try {
+            const svgString = await fetch('https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg').then(resp => {
+                console.log(resp)
+                return resp.text()
+            });
+
+            // this.sampleSVG =  svgString;
+            // this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(svgString)
+            const el = document!.getElementById('svg')!
+            el.innerHTML = svgString;
+            
+            const rect = el.querySelectorAll('rect');
+            console.log(rect.length)
+            rect.forEach(item => {
+                item.style.fill = 'pink'
+                item.style.cursor = 'pointer'
+            })
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     public handleTabChange(index: number) {

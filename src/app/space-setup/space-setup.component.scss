@@ -101,6 +101,17 @@ $spacing: 20px;
                     
                     > div {
                         margin: 0 auto;
+                        // height: ;
+                         img {
+                            width: 1600px;
+                        }
+
+                    }
+
+                    #svg {
+                        height: 70vh;
+                        overflow: scroll;
+                        width: 80vh;
                     }
                 }
             }
@@ -213,4 +224,11 @@ $spacing: 20px;
             margin-left: $spacing;
         }
     }
+
+}
+
+
+rect.cube {
+    color: cornflowerblue !important;
+    cursor: pointer;
 }
