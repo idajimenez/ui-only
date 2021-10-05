@@ -16,7 +16,7 @@ export class PreviewFloorPlanComponent implements OnInit {
             removedCount: 50,
             addedCount: 3
         }],
-        file: 'https://cdn.shopify.com/s/files/1/0269/1435/t/1/assets/Freesample.png?21088'
+        file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }, {
         fileName: 'FacilityA_FL1_09-01-2020',
         isUploaded: false,
@@ -26,8 +26,10 @@ export class PreviewFloorPlanComponent implements OnInit {
             removedCount: 52,
             addedCount: 4
         }],
-        file: 'https://cdn.shopify.com/s/files/1/0269/1435/t/1/assets/Freesample.png?21088'
+        file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
+    public spaceCount: number = 0;
+    public currentSpace: any = null;
 
     constructor() { }
 
@@ -35,7 +37,19 @@ export class PreviewFloorPlanComponent implements OnInit {
     }
 
     public handleTabChange(index: number) {
-        console.log('tab', index)
         this.activeTabIndex = index;
+    }
+
+    public setCurrentSpace = (space: any): void => {
+        console.log('space', space);
+        this.currentSpace = space;
+    }
+
+    public clearCurrentSpace = (): void => {
+        this.currentSpace = null;
+    }
+
+    public setSpaceCount = (count: number): void => {
+        this.spaceCount = count;
     }
 }

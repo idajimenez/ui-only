@@ -169,7 +169,10 @@ $spacing: 20px;
 
                 &__title {
                     @include bold-title;
+
                     margin-bottom: 10px;
+                    display: flex;
+                    justify-content: space-between;
                 }
             }
         }

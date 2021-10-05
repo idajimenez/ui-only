@@ -20,9 +20,11 @@
                 <div class="floor-plan-preview__layout__content">
                     <div class="floor-plan-preview__layout__content-preview">
                         <div class="floor-plan-preview__layout__content-preview__svg">
-                            <div>
-                                <img [src]="floorPlans[activeTabIndex].file" alt='floor-plan' />
-                            </div>
+                            <app-render-svg
+                                [url]="floorPlans[activeTabIndex].file"
+                                [callbackFunction]="setCurrentSpace"
+                                [setSpaceCount]="setSpaceCount">
+                            </app-render-svg>
                         </div>
                         <div class="floor-plan-preview__layout__content-preview__tip">
                             <p><b>TIP: </b> Clicking a space from the floor plan map will show its space profile on the left information panel.</p>
@@ -34,14 +36,16 @@
                             <div class="floor-plan-preview__layout__content-details__title">SPACES COUNT</div>
                             <div class="floor-plan-preview__layout__content-details__space-count__legend">
                                 <div class="floor-plan-preview__layout__content-details__space-count__legend-color --purple"></div>
-                                <div><b>{{floorPlans[activeTabIndex].spaceCount}}</b> Spaces</div>
+                                <div><b>{{spaceCount}}</b> Spaces</div>
                             </div>
                         </div>
 
-                        <div class="floor-plan-preview__layout__content-details__space-changes --wrapper">
-                            <div class="floor-plan-preview__layout__content-details__title">SPACES CHANGES</div>
+                        <div class="floor-plan-preview__layout__content-details__space-changes --wrapper"  *ngIf="!currentSpace">
+                            <div class="floor-plan-preview__layout__content-details__title" >SPACES CHANGES</div>
 
-                            <div class="floor-plan-preview__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
+                            <div
+                                class="floor-plan-preview__layout__content-details__space-changes__item"
+                                *ngFor="let change of floorPlans[activeTabIndex].changes;">
                                 <div>
                                     <p>{{change.fileName}}</p>
                                     <div class="floor-plan-preview__status --small --next"></div>
@@ -50,6 +54,20 @@
                                     <li>{{change.removedCount}} spaces removed</li>
                                     <li>{{change.addedCount}} spaces added</li>
                                 </ul>
+                            </div>
+
+                        </div>
+
+                        <div  class="floor-plan-preview__layout__content-details__space-changes --wrapper" *ngIf="currentSpace">
+                            <div class="floor-plan-preview__layout__content-details__title" >
+                                SPACES DETAILS
+                                <div (click)="clearCurrentSpace()">
+                                    x <!-- < replace with actual icon > -->
+                                </div>
+                            </div>
+
+                            <div>
+                                <p>{{currentSpace}}</p>
                             </div>
                         </div>
                     </div>

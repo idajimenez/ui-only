@@ -11,13 +11,15 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PreviewFloorPlanComponent } from './preview-floor-plan/preview-floor-plan.component';
 import { SpaceSetupComponent } from './space-setup/space-setup.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { RenderSvgComponent } from './render-svg/render-svg.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PreviewFloorPlanComponent,
     SpaceSetupComponent,
-    TabsComponent
+    TabsComponent,
+    RenderSvgComponent
   ],
   imports: [
     BrowserModule,

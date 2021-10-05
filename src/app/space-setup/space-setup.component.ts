@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import axios from 'axios';
 
 @Component({
     selector: 'app-space-setup',
@@ -43,7 +41,7 @@ export class SpaceSetupComponent implements OnInit {
     }];
     // public svgPreview: 
 
-    constructor(private sanitizer: DomSanitizer) { }
+    constructor() { }
 
     ngOnInit(): void {
         this.downloadSvg();
