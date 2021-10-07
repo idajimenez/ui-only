@@ -20,7 +20,10 @@
                 <div class="space-setup__layout__content">
                     <div class="space-setup__layout__content-preview">
                         <div class="space-setup__layout__content-preview__svg">
-                            <div id="svg"></div>
+                            <app-render-svg
+                                [url]="floorPlans[activeTabIndex].file"
+                                [callbackFunction]="setCurrentSpace">
+                            </app-render-svg>
                         </div>
                         <div class="space-setup__layout__content-preview__tip">
                             <p><b>TIP: </b> Clicking a space from the floor plan map will show its space profile on the left information panel.</p>
@@ -30,6 +33,15 @@
                     <div class="space-setup__layout__content-details">
                         <div class="space-setup__layout__content-details__space-count --wrapper">
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
+
+                            <div>
+                                <select >
+                                    <option value="spaceassignability">Space Assignability</option>
+                                    <option value="spacetenant">Space Tenant</option>
+                                    <option value="spacestatus">Space Status</option>
+                                </select>
+                            </div>
+
                             <div class="space-setup__layout__content-details__space-count__legend" *ngFor="let legend of floorPlans[activeTabIndex].legends;">
                                 <div
                                     class="space-setup__layout__content-details__space-count__legend-color"

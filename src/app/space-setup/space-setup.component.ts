@@ -37,42 +37,25 @@ export class SpaceSetupComponent implements OnInit {
             removedCount: 52,
             addedCount: 4
         }],
-        file: 'https://cdn.shopify.com/s/files/1/0269/1435/t/1/assets/Freesample.png?21088'
+        file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
-    // public svgPreview: 
+    public currentSpace: any = null;
 
     constructor() { }
 
     ngOnInit(): void {
-        this.downloadSvg();
-    }
-
-    public async downloadSvg() {
-        try {
-            const svgString = await fetch('https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg').then(resp => {
-                console.log(resp)
-                return resp.text()
-            });
-
-            // this.sampleSVG =  svgString;
-            // this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(svgString)
-            const el = document!.getElementById('svg')!
-            el.innerHTML = svgString;
-            
-            const rect = el.querySelectorAll('rect');
-            console.log(rect.length)
-            rect.forEach(item => {
-                item.style.fill = 'pink'
-                item.style.cursor = 'pointer'
-            })
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     public handleTabChange(index: number) {
-        console.log('tab', index)
         this.activeTabIndex = index;
     }
 
+    public setCurrentSpace = (space: any): void => {
+        console.log('space', space);
+        this.currentSpace = space;
+    }
+
+    public clearCurrentSpace = (): void => {
+        this.currentSpace = null;
+    }
 }

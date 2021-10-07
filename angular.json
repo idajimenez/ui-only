@@ -44,7 +44,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["snapsvg/dist/snap.svg-min.js"]
           },
           "configurations": {
             "production": {
@@ -112,7 +112,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["snapsvg/dist/snap.svg-min.js"]
           }
         }
       }
