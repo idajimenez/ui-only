@@ -8,11 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RenderSvgComponent implements OnInit {
     @Input() callbackFunction: ((space: any) => void) | undefined;
     @Input() setSpaceCount: ((count: number) => void) | undefined;
-    @Input() url: string = '';
+    @Input() url: string = 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg';
 
     public selectedItems: any[] = [];
     public selectedDocuments: any[] = [];
-    
+
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
@@ -27,7 +27,7 @@ export class RenderSvgComponent implements OnInit {
         try {
             const svgString = await fetch(this.url).then(resp => resp.text());
             this.setupSvgElements(svgString);
-            
+
             this.isDownloadingSvg = false;
         } catch (err) {
             this.isDownloadError = true;
@@ -38,7 +38,7 @@ export class RenderSvgComponent implements OnInit {
     public setupSvgElements(svgString: string) {
         const el = document!.getElementById('svg')!
         el.innerHTML = svgString;
-        
+
         const rect = el.querySelectorAll('rect');
 
         this.setSpaceCount!(rect.length);
