@@ -22,7 +22,8 @@
                         <div class="space-setup__layout__content-preview__svg">
                             <app-render-svg
                                 [url]="floorPlans[activeTabIndex].file"
-                                [callbackFunction]="setCurrentSpace">
+                                [callbackFunction]="setCurrentSpace"
+                                [data]='sampleData'>
                             </app-render-svg>
                         </div>
                         <div class="space-setup__layout__content-preview__tip">
@@ -35,7 +36,7 @@
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
 
                             <div>
-                                <select >
+                                <select (change)="onChangeSpaceStatus($event)">
                                     <option value="spaceassignability">Space Assignability</option>
                                     <option value="spacetenant">Space Tenant</option>
                                     <option value="spacestatus">Space Status</option>
@@ -50,8 +51,23 @@
                             </div>
                         </div>
 
-                        <div class="space-setup__layout__content-details__space-changes --wrapper">
+                        <!-- <div class="space-setup__layout__content-details__space-changes --wrapper">
                             <div class="space-setup__layout__content-details__title">SPACES CHANGES</div>
+
+                            <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
+                                <div>
+                                    <p>{{change.fileName}}</p>
+                                    <div class="space-setup__status --small --next"></div>
+                                </div>
+                                <ul>
+                                    <li>{{change.removedCount}} spaces removed</li>
+                                    <li>{{change.addedCount}} spaces added</li>
+                                </ul>
+                            </div>
+                        </div> -->
+
+                        <div class="space-setup__layout__content-details__space-changes --wrapper">
+                            <div class="space-setup__layout__content-details__title">FlOOR CAPACITY</div>
 
                             <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
                                 <div>

@@ -1,6 +1,7 @@
 declare var Snap: any;
 declare var mina: any;
 
+
 import { Component, Input, OnInit } from '@angular/core';
 // import Snap from 'snapsvg-cjs';
 
@@ -13,6 +14,7 @@ export class RenderSvgComponent implements OnInit {
     @Input() callbackFunction: ((space: any) => void) | undefined;
     @Input() setSpaceCount?: ((count: number) => void) | undefined;
     @Input() url: string = '';
+    @Input() data: any = [];
 
     public selectedItems: any[] = [];
     public selectedDocuments: any[] = [];
@@ -20,11 +22,14 @@ export class RenderSvgComponent implements OnInit {
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
-    constructor() { }
+    constructor() { 
+        // document.addEventListener('mousemove', (event) => {
+        //     console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+        // });
+    }
 
     ngOnInit(): void {
         this.downloadSvg();
-        console.log(this.callbackFunction)
     }
 
     public async downloadSvg() {
@@ -46,12 +51,16 @@ export class RenderSvgComponent implements OnInit {
         el.innerHTML = svgString;
         
         console.log(el.firstElementChild!.id);
-        this.addDragListener(el.firstElementChild!);
 
-        // const svg = el.getElementsByTagName('svg');
-        // console.log(svg)
+        // this.addDragListener(el.firstElementChild!);
+
+        const svg = el.getElementsByTagName('svg');
         // el.firstElementChild!.style.width = '100%';
-        // el.style.height = '100%';
+        svg[0].setAttribute("viewBox", "150 30 330 290");
+        console.log(svg)
+        // console.log(svg[0].getBBox())
+        svg[0].style.height = '70vh';
+        svg[0].style.width = '75vw';
         const rect = el.querySelectorAll('rect');
 
         let ids: string[] = [];
@@ -62,26 +71,53 @@ export class RenderSvgComponent implements OnInit {
             // General styles
             item.style.cursor = 'pointer';
 
-            // Styles based on status
-            item.style.fill = '#A100FF';
+            // DEFAULT COLOR FOR SPACE STATUS
+            item.style.fill = '#FFFFFF';
+            item.style.stroke = '#A100FF';
+
+            // CHECK IF SPACE HAS CONFIGURATION
+            this.data.find((da: { spaceId: string; }) => { 
+                if(da.spaceId === item.id) {
+                    this.handleFilterAssignments(item, da);
+                } 
+             });
 
             item.addEventListener('click', this.onItemClick.bind(this))
         })
 
-        console.log(ids);
+        // console.log(ids);
+    }
+
+    /*
+    * FIlTER SPACE COLOR BASED ON STATUS
+    */
+    public handleFilterAssignments(item: any, da: any) {
+        console.log(da)
+        switch (da.spacestatus) {
+            case 'flexible':
+                item.style.fill = '#21D826';
+                item.style.stroke = '#21D826';
+                break;
+            case 'fixed':
+                item.style.fill = '#1275D8';
+                item.style.stroke = '#1275D8';
+                break;
+            default:
+                break;
+        }
+       
     }
 
     public addDragListener(svg: Element) {
         var s = Snap(`#${svg.id}`);
-
-        console.log(s.children());
+        // var s = Snap(svg);
+        // console.log(s.children());
+        console.log(s);
         //make an object in the background on which to attach drag events
         // var mat = svg.querySelector('g');
-        var mat = s.rect(0, 0, 300, 300).attr("fill", "#ffffff");
-
+        var mat = s.rect(0, 0, 1260, 602).attr("fill", "#ffffff");
         var circle = s.circle(75, 75, 50);
-        var rect = s.rect(150, 150, 50, 50);
-        var set = s.g(circle, rect);
+        var set = s.g(circle);
         
         set.attr({
             fill: 'red',
@@ -101,8 +137,8 @@ export class RenderSvgComponent implements OnInit {
         
         //when mouse moves during drag, adjust box. If to left or above original point, you have to translate the whole box and invert the dx or dy values since .rect() doesn't take negative width or height
         function dragmove (dx: number, dy: number, x: any, y: any, event: any) {
-            var xoffset = 0,
-                yoffset = 0;
+            var xoffset = 150,
+                yoffset = 30;
                 
             if (dx < 0) {
                 xoffset = dx;
@@ -125,7 +161,7 @@ export class RenderSvgComponent implements OnInit {
             //get the bounds of the selections
             var bounds = box.getBBox();
             box.remove();
-            reset();
+            // reset();
 
             var items = set.selectAll("*");
             items.forEach(function(el: { getBBox: () => any; }) {
@@ -153,11 +189,11 @@ export class RenderSvgComponent implements OnInit {
                 set.append(el);
             });
         }
-        
         mat.drag(dragmove, dragstart, dragend);
     }
 
     public onItemClick(e: any) {
+        
         this.callbackFunction!(e.target.id);
     }
 
