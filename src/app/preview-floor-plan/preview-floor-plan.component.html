@@ -42,10 +42,11 @@
 
                         <div class="floor-plan-preview__layout__content-details__space-changes --wrapper"  *ngIf="!currentSpace">
 
-                          <!-- REUSABLE BUTTON WITH DROPDOWN -->
-                            <div class="floor-plan-preview__layout__content-details__title" >SPACES CHANGES</div>
 
+                            <div class="floor-plan-preview__layout__content-details__title" >SPACES CHANGES</div>
+                            <!-- REUSABLE BUTTON WITH DROPDOWN -->
                             <aio-buttons [titleData]="'Select space type'" [itemData]="items" ></aio-buttons>
+                            <br>
                             <div
                                 class="floor-plan-preview__layout__content-details__space-changes__item"
                                 *ngFor="let change of floorPlans[activeTabIndex].changes;">

@@ -2,8 +2,11 @@
   <div class="btn-container">
   <button class="btn-class" (click)="toggleHover = !toggleHover">{{ titleData }} </button>
   <div *ngIf="toggleHover==true" class="list-container">
-    <ul class="">
-      <li *ngFor="let item of  itemData " class="list">{{ item }} <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon></li>
+    <ul class="ul-list">
+      <li *ngFor="let item of  itemData " class="list">
+        <div class="listData">{{ item }}</div>
+        <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
+      </li>
     </ul>
   </div>
 </div>
