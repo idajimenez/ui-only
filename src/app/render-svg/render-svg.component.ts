@@ -18,7 +18,7 @@ export class RenderSvgComponent implements OnInit {
 
     public selectedItems: any[] = [];
     public selectedDocuments: any[] = [];
-    
+
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
@@ -36,7 +36,7 @@ export class RenderSvgComponent implements OnInit {
         try {
             const svgString = await fetch(this.url).then(resp => resp.text());
             this.setupSvgElements(svgString);
-            
+
             this.isDownloadingSvg = false;
         } catch (err) {
             console.log(err)

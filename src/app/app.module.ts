@@ -12,6 +12,9 @@ import { PreviewFloorPlanComponent } from './preview-floor-plan/preview-floor-pl
 import { SpaceSetupComponent } from './space-setup/space-setup.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { RenderSvgComponent } from './render-svg/render-svg.component';
+import { ButtonsComponent } from './buttons-reusable/buttons.component';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -19,9 +22,11 @@ import { RenderSvgComponent } from './render-svg/render-svg.component';
     PreviewFloorPlanComponent,
     SpaceSetupComponent,
     TabsComponent,
-    RenderSvgComponent
+    RenderSvgComponent,
+    ButtonsComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
