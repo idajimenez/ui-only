@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="space-setup__layout__content-details">
+                    <div class="space-setup__layout__content-details" *ngIf="!currentSpace">
                         <div class="space-setup__layout__content-details__space-count --wrapper">
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
 
@@ -51,21 +51,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="space-setup__layout__content-details__space-changes --wrapper">
-                            <div class="space-setup__layout__content-details__title">SPACES CHANGES</div>
-
-                            <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
-                                <div>
-                                    <p>{{change.fileName}}</p>
-                                    <div class="space-setup__status --small --next"></div>
-                                </div>
-                                <ul>
-                                    <li>{{change.removedCount}} spaces removed</li>
-                                    <li>{{change.addedCount}} spaces added</li>
-                                </ul>
-                            </div>
-                        </div> -->
-
                         <div class="space-setup__layout__content-details__space-changes --wrapper">
                             <div class="space-setup__layout__content-details__title">FlOOR CAPACITY</div>
 
@@ -79,6 +64,19 @@
                                     <li>{{change.addedCount}} spaces added</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="space-setup__layout__content-details" *ngIf="currentSpace">
+                        <div class="space-setup__layout__content-details__space-title --wrapper">
+                            SEAT {{currentSpace}}
+                            <div (click)="clearCurrentSpace()">
+                                x <!-- < replace with actual icon > -->
+                            </div>
+                        </div>
+
+                        <div class="--wrapper">
+                            <div class="space-setup__layout__content-details__title">SPACE PROFILE</div>
                         </div>
                     </div>
                 </div>

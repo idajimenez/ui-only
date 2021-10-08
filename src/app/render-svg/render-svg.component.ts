@@ -52,15 +52,15 @@ export class RenderSvgComponent implements OnInit {
         
         console.log(el.firstElementChild!.id);
 
-        // this.addDragListener(el.firstElementChild!);
+        this.addDragListener(el.firstElementChild!);
 
         const svg = el.getElementsByTagName('svg');
         // el.firstElementChild!.style.width = '100%';
-        svg[0].setAttribute("viewBox", "150 30 330 290");
-        console.log(svg)
+        // svg[0].setAttribute("viewBox", "150 30 330 290");
+        // console.log(svg)
         // console.log(svg[0].getBBox())
-        svg[0].style.height = '70vh';
-        svg[0].style.width = '75vw';
+        svg[0].style.height = '100%';
+        svg[0].style.width = '100%';
         const rect = el.querySelectorAll('rect');
 
         let ids: string[] = [];
@@ -112,18 +112,12 @@ export class RenderSvgComponent implements OnInit {
         var s = Snap(`#${svg.id}`);
         // var s = Snap(svg);
         // console.log(s.children());
-        console.log(s);
+        // console.log("--", s.selectAll('rect'));
         //make an object in the background on which to attach drag events
         // var mat = svg.querySelector('g');
-        var mat = s.rect(0, 0, 1260, 602).attr("fill", "#ffffff");
-        var circle = s.circle(75, 75, 50);
-        var set = s.g(circle);
-        
-        set.attr({
-            fill: 'red',
-            stroke: 0
-        });
-
+        var mat = s.rect(0, 0, svg.clientWidth, svg.clientHeight).attr("fill-opacity", 0);
+        var set = s.g(s.selectAll('rect'));
+    
         var box: any;
         
         //set that will receive the selected items
@@ -132,13 +126,14 @@ export class RenderSvgComponent implements OnInit {
         //DRAG FUNCTIONS
         //when mouse goes down over background, start drawing selection box
         function dragstart (x: any, y: any, event: any) {
+            console.log(x, y, event)
             box = s.rect(x, y, 0, 0).attr("stroke", "#9999FF");    
         }
         
         //when mouse moves during drag, adjust box. If to left or above original point, you have to translate the whole box and invert the dx or dy values since .rect() doesn't take negative width or height
         function dragmove (dx: number, dy: number, x: any, y: any, event: any) {
-            var xoffset = 150,
-                yoffset = 30;
+            var xoffset = 0,
+                yoffset = 0;
                 
             if (dx < 0) {
                 xoffset = dx;
@@ -176,8 +171,11 @@ export class RenderSvgComponent implements OnInit {
                 }
             });
 
-            console.log(items);
-            console.log(selections)
+            // console.log(items);
+
+            // console.log(typeof selections.selectAll('rect'))
+            // KUNIN MO UNG SELECTED rect DITO SA selections.. ito ung mga selected
+            // naka object siya
             selections.attr("opacity", 0.5);
         }
         
@@ -193,7 +191,7 @@ export class RenderSvgComponent implements OnInit {
     }
 
     public onItemClick(e: any) {
-        
+
         this.callbackFunction!(e.target.id);
     }
 

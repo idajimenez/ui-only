@@ -39,6 +39,7 @@ export class SpaceSetupComponent implements OnInit {
         }],
         file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
+
     public sampleData: any[] = [
         {
             spaceId: '5.48A',
@@ -58,7 +59,6 @@ export class SpaceSetupComponent implements OnInit {
             numofallowableproj: 2,
             numofallowableresource: 2,
             gaphours: 'sample',
-
         },
         {
             spaceId: '5.50D',
@@ -77,8 +77,7 @@ export class SpaceSetupComponent implements OnInit {
             endstart: '',
             numofallowableproj: 2,
             numofallowableresource: 2,
-            gaphours: 'sample',
-
+            gaphours: 'sample'
         },
     ]
 

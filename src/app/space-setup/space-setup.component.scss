@@ -119,6 +119,7 @@ $spacing: 20px;
             &-details {
                 border: 1px solid #A100FF40;
                 width: 267px;
+                min-width: 267px;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
@@ -194,6 +195,13 @@ $spacing: 20px;
                     @include bold-title;
                     margin-bottom: 10px;
                 }
+
+                &__space-title {
+                    font-size: 18px;
+                    color: #460073;
+                    display: flex;
+                    justify-content: space-between;
+                }
             }
         }
     }
@@ -225,10 +233,4 @@ $spacing: 20px;
         }
     }
 
-}
-
-
-rect.cube {
-    color: cornflowerblue !important;
-    cursor: pointer;
 }
