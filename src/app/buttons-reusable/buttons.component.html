@@ -1,13 +1,12 @@
 
-  <div class="btn-container">
-  <button class="btn-class" (click)="toggleHover = !toggleHover">{{ titleData }} </button>
-  <div *ngIf="toggleHover==true" class="list-container">
-    <ul class="ul-list">
+<div class="btn-container">
+  <button class="btn-container__button" (click)="toggleHover = !toggleHover">{{ titleData }} </button>
+  <div *ngIf="toggleHover==true" class="btn-container__list-container">
+    <ul>
       <li *ngFor="let item of  itemData " class="list">
-        <div class="listData">{{ item }}</div>
-        <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
+        <button class="listData" (click)="onClick(item)">{{ item.viewValue }}</button>
+        
       </li>
     </ul>
   </div>
 </div>
-

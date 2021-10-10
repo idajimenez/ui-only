@@ -1,51 +1,56 @@
-.btn-class{
-  width: 100%;
-  height: 40px;
-  border: 1px solid rgba(0, 0, 0,0.3);
-  background-color: transparent;
-  border-radius: 3px;
-  color:rgba(0, 0, 0,0.2);
-  cursor: pointer;
-  text-align: left;
-  padding-left: 20px;
-  font-family: Graphik;
-  font-size: 1rem;
 
-}
 .btn-container{
   width: 100%;
 
-}
-.list-container{
-  border:1px solid rgba(0, 0, 0,0.2);
-  margin: 0;
-  border-top: 0;
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  max-width: 225px;
-  ul{
-    padding: 0;
-    margin:0;
+  &__button{
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e3e3e3;
+    background-color: transparent;
+    border-radius: 3px;
+    // color:rgba(0, 0, 0,0.2);
+    cursor: pointer;
+    text-align: left;
+    font-family: Graphik;
+    font-size: 1rem;
+  
+    &:hover {
+      border-color: #A100FF;
+    }
   }
 
-}
-.list{
-  position: relative;
-  list-style: none;
-  cursor: pointer;
-  padding-left: 3px 10px 3px 0px;
-  display: flex;
+  &__list-container{
+    border:1px solid rgba(0, 0, 0,0.2);
+    margin: 0;
+    border-top: 0;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-width: 225px;
+    
+    ul{
+      padding: 0;
+      margin:0;
 
-}
-.listData{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 4px 0px 4px 10px;
-}
-.list:hover{
-  background-color: silver;
+      li {
+        position: relative;
+        list-style: none;
+        cursor: pointer;
+        padding-left: 3px 10px 3px 0px;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 4px 0px 4px 10px;
+        
+        li:hover {
+          background-color: silver;
+        }
+
+      }
+    }
+  
+  }
 }
 
 

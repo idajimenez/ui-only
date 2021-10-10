@@ -123,6 +123,8 @@ $spacing: 20px;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
+                height: 69vh;
+                overflow-y: scroll;
 
                 .--wrapper {
                     padding: 10px;
@@ -194,6 +196,15 @@ $spacing: 20px;
                 &__title {
                     @include bold-title;
                     margin-bottom: 10px;
+                    border-bottom: 1px solid #e3e3e3;
+                    padding-bottom: 20px;
+                }
+
+                &__revert-changes {
+                    font-size: 10px;
+                    font-weight: bold;
+                    text-align: right;
+                    color: #460073;
                 }
 
                 &__space-title {

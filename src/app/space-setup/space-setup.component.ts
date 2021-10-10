@@ -48,7 +48,7 @@ export class SpaceSetupComponent implements OnInit {
             spacetype: '',
             spacenum: '',
             spacetenant: '',
-            spacestatus: 'flexible',
+            spacestatus: 'fixed',
             spacegradelv1: '',
             spaceassignability: '',
             allowableweeklyschedule: '',

@@ -1,0 +1,143 @@
+<div class='space-profile-form'>
+    <form>
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE FUNCTION</label>
+            </div>
+            <div class='space-profile-form__function--function-wrapper'>
+                <!-- <div 
+                    class='space-profile-form__function--buttons' 
+                    *ngFor='let function of functions; let i = index'
+                    [class.--active-button]='i === activeFunctionIndex'
+                    (click)='handleFunctionChange(i)'>
+                    <button>{{ function.label }}</button>
+                </div> -->
+                <!-- <mat-button-toggle-group 
+                    name="fontStyle" 
+                    aria-label="Font Style"  
+                    class='space-profile-form__function--buttons'
+                    *ngFor='let function of functions; let i = index'
+                    [class.--active-button]='i === activeFunctionIndex'
+                    (click)='handleFunctionChange(i)'>
+                    <mat-button-toggle value="bold">{{ function.label }}</mat-button-toggle>
+                </mat-button-toggle-group> -->
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" >
+                    <mat-button-toggle value="bold">Bold</mat-button-toggle>
+                    <mat-button-toggle value="italic">Italic</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+
+        <div class='space-profile-form__type'>
+            <div class='space-profile-form__type--title'>
+                <label>SPACE TYPE</label>
+            </div>
+                <aio-buttons titleData='Select space type' [itemData]='types' (handleClick)='handleSpaceType'></aio-buttons>
+            <!-- <mat-form-field appearance="fill" class='mat-form'>
+                <select matNativeControl required class='testSelect' >
+                    <option *ngFor="let type of types   " [value]="type.value">{{type.viewValue}}</option>
+                </select>
+            </mat-form-field> -->
+        </div>
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE STATUS</label>
+            </div>
+            <div class="space-profile-form__function--dropdown">
+                <aio-buttons titleData='' [itemData]='spaceStatus' (handleClick)="handleSpaceType"></aio-buttons>
+            </div>
+        </div>
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE GRADE LEVEL</label>
+            </div>
+            <div class="space-profile-form__function--dropdown">
+                <aio-buttons titleData='' [itemData]='gradeLevel' ></aio-buttons>
+            </div>
+        </div>
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE TENANT</label>
+            </div>
+            <div class="space-profile-form__function--dropdown">
+                <aio-buttons titleData='' [itemData]='tenant'></aio-buttons>
+            </div>
+        </div>
+
+        <div class='space-profile-form__assignability'>
+            <div class='space-profile-form__assignability--title'>
+                <label>SPACE ASSIGNABILITY</label>
+            </div>
+            <div class='space-profile-form__assignability--buttons'>
+                <button>Fixed</button>
+                <button>Flexible</button>
+                <button>Blocked</button>
+            </div>
+        </div>
+
+        <div class='space-profile-form__days-available'>
+            <div class='space-profile-form__days-available--title'>
+                <label>DAYS AVAILABLE</label>
+            </div>
+            <div class='space-profile-form__days-available--buttons'>
+                <button>S</button>
+                <button>M</button>
+                <button>T</button>
+                <button>W</button>
+                <button>T</button>
+                <button>F</button>
+                <button>S</button>
+            </div>
+        </div>
+
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE START</label>
+            </div>
+            <div class="space-profile-form__function--dropdown">
+                <aio-buttons titleData=''></aio-buttons>
+            </div>
+        </div>
+        <div class='space-profile-form__function'>
+            <div class='space-profile-form__function--title'>
+                <label>SPACE END</label>
+            </div>
+            <div class="space-profile-form__function--dropdown">
+                <aio-buttons titleData=''></aio-buttons>
+            </div>
+        </div>
+
+        <!-- ALLOWABLE -->
+        <div class='space-profile-form__allowable'>
+            <div class='space-profile-form__allowable--title'>
+                <label>NUMBER OF ALLOWABLE PROJECTS</label>
+            </div>
+            <div class="space-profile-form__allowable--input-buttons">
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
+                <input />
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
+            </div>
+        </div>
+        <div class='space-profile-form__allowable'>
+            <div class='space-profile-form__allowable--title'>
+                <label>NUMBER OF ALLOWABLE RESOURCES(EID)</label>
+            </div>
+            <div class="space-profile-form__allowable--input-buttons">
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
+                <input />
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
+            </div>
+        </div>
+        <div class='space-profile-form__allowable'>
+            <div class='space-profile-form__allowable--title'>
+                <label>GAP HOURS</label>
+            </div>
+            <div class="space-profile-form__allowable--input-buttons">
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
+                <input />
+                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
+            </div>
+        </div>
+
+    </form>
+</div>

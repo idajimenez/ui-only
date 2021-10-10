@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +19,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { RenderSvgComponent } from './render-svg/render-svg.component';
 import { ButtonsComponent } from './buttons-reusable/buttons.component';
 import { CommonModule } from '@angular/common';
+import { SpaceProfileFormComponent } from './space-profile-form/space-profile-form.component';
 
 
 @NgModule({
@@ -23,7 +29,8 @@ import { CommonModule } from '@angular/common';
     SpaceSetupComponent,
     TabsComponent,
     RenderSvgComponent,
-    ButtonsComponent
+    ButtonsComponent,
+    SpaceProfileFormComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +41,12 @@ import { CommonModule } from '@angular/common';
     NbLayoutModule,
     NbEvaIconsModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonToggleModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

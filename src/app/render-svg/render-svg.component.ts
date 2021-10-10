@@ -52,8 +52,6 @@ export class RenderSvgComponent implements OnInit {
         
         console.log(el.firstElementChild!.id);
 
-        this.addDragListener(el.firstElementChild!);
-
         const svg = el.getElementsByTagName('svg');
         // el.firstElementChild!.style.width = '100%';
         // svg[0].setAttribute("viewBox", "150 30 330 290");
@@ -74,25 +72,27 @@ export class RenderSvgComponent implements OnInit {
             // DEFAULT COLOR FOR SPACE STATUS
             item.style.fill = '#FFFFFF';
             item.style.stroke = '#A100FF';
-
+            
+            
             // CHECK IF SPACE HAS CONFIGURATION
             this.data.find((da: { spaceId: string; }) => { 
                 if(da.spaceId === item.id) {
                     this.handleFilterAssignments(item, da);
                 } 
-             });
-
+            });
+            
             item.addEventListener('click', this.onItemClick.bind(this))
+
         })
 
-        // console.log(ids);
+        // MULTI SELECT
+        // this.addDragListener(el.firstElementChild!);
     }
 
     /*
     * FIlTER SPACE COLOR BASED ON STATUS
     */
     public handleFilterAssignments(item: any, da: any) {
-        console.log(da)
         switch (da.spacestatus) {
             case 'flexible':
                 item.style.fill = '#21D826';
@@ -177,6 +177,7 @@ export class RenderSvgComponent implements OnInit {
             // KUNIN MO UNG SELECTED rect DITO SA selections.. ito ung mga selected
             // naka object siya
             selections.attr("opacity", 0.5);
+            console.log(selections)
         }
         
         
@@ -191,7 +192,6 @@ export class RenderSvgComponent implements OnInit {
     }
 
     public onItemClick(e: any) {
-
         this.callbackFunction!(e.target.id);
     }
 
