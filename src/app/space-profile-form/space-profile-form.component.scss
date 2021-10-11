@@ -42,7 +42,7 @@
         }
     }
 
-    &__type {
+    &__type, &__status, &__grade, &__tenant, &__shifts {
         margin: 10px 0;
 
         &--title {
@@ -56,7 +56,6 @@
         }
 
         mat-form-field {
-
             ::ng-deep .mat-form-field-flex {
                 background-color: #fff;
                 border: 1px solid #e3e3e3;
@@ -71,12 +70,39 @@
                 background-color: #A100FF !important;
 
             }
-            
-            
         }
-
-        
     }
+
+    // &__type {
+    //     margin: 10px 0;
+
+    //     &--title {
+    //         margin: 5px 0;
+
+    //         label {
+    //             font-size: 10px;
+    //             font-weight: bold;
+    //             color: #000;
+    //         }
+    //     }
+
+    //     mat-form-field {
+    //         ::ng-deep .mat-form-field-flex {
+    //             background-color: #fff;
+    //             border: 1px solid #e3e3e3;
+    //             padding: 5px 15px;
+    //         }
+
+    //         ::ng-deep .mat-form-field-wrapper > .mat-form-field-underline {
+    //             display: none;
+    //         }
+
+    //         select > option {
+    //             background-color: #A100FF !important;
+
+    //         }
+    //     }
+    // }
 
 
 

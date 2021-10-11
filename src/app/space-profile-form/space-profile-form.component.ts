@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 interface Types {
   value: string;
   viewValue: string;
@@ -17,6 +16,10 @@ interface Food {
   styleUrls: ['./space-profile-form.component.scss']
 })
 export class SpaceProfileFormComponent implements OnInit {
+  public spaceForm = this.fb.group({
+    spaceType: ['']
+  })
+
   selectedValue: string = '';
   public activeFunctionIndex: any;
   public selectedSpaceType: any;
@@ -30,12 +33,6 @@ export class SpaceProfileFormComponent implements OnInit {
       label: 'Room',
       isActive: false,
     },
-  ];
-
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
   ];
 
   types: Types[] = [
@@ -55,23 +52,60 @@ export class SpaceProfileFormComponent implements OnInit {
     {value: 'partitionloss', label: 'Partition Loss'},
   ];
 
-  tenant: any[] = [
+  tenants: any[] = [
     {value: 'blank', label: 'Blank'},
     {value: 'bpo', label: 'BPO'},
     {value: 'tgp', label: 'TGP'},
     {value: 'gs', label: 'GS'},
   ];
 
-  myForm: FormGroup | undefined;
+  shifts: any[] = [
+    {value: '12:00 AM', label: '12:00 AM'},
+    {value: '1:00 AM', label: '1:00 AM'},
+    {value: '2:00 AM', label: '2:00 AM'},
+    {value: '3:00 AM', label: '3:00 AM'},
+    {value: '4:00 AM', label: '4:00 AM'},
+    {value: '5:00 AM', label: '5:00 AM'},
+    {value: '6:00 AM', label: '6:00 AM'},
+    {value: '7:00 AM', label: '7:00 AM'},
+    {value: '8:00 AM', label: '8:00 AM'},
+    {value: '9:00 AM', label: '9:00 AM'},
+    {value: '10:00 AM', label: '10:00 AM'},
+    {value: '11:00 AM', label: '11:00 AM'},
+    {value: '12:00 PM', label: '12:00 PM'},
+    {value: '1:00 PM', label: '1:00 PM'},
+    {value: '2:00 PM', label: '2:00 PM'},
+    {value: '3:00 PM', label: '3:00 PM'},
+    {value: '4:00 PM', label: '4:00 PM'},
+    {value: '5:00 PM', label: '5:00 PM'},
+    {value: '6:00 PM', label: '6:00 PM'},
+    {value: '7:00 PM', label: '7:00 PM'},
+    {value: '8:00 PM', label: '8:00 PM'},
+    {value: '9:00 PM', label: '9:00 PM'},
+    {value: '10:00 PM', label: '10:00 PM'},
+    {value: '11:00 PM', label: '11:00 PM'},
+  ];
 
-  constructor() { }
+
+  constructor(public fb: FormBuilder) { }
 
   ngOnInit() {
    
   }
 
+  onSubmit() {
+    alert(JSON.stringify(this.spaceForm.value))
+  }
+
   public handleFunctionChange(index: number) {
     this.activeFunctionIndex = index;
+  }
+
+  public changeSpace(e: any) {
+    // this.spaceType.setValue(e.target.value, {
+    //   test: true
+    // })
+    console.log(e.target.value)
   }
 
 
