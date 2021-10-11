@@ -1248,6 +1248,13 @@
   dependencies:
     intersection-observer "0.7.0"
 
+"@ng-bootstrap/ng-bootstrap@^4.0.0":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-4.2.2.tgz#a1c3a9576656cb4f793bbc3df56dfbdeb098f2fb"
+  integrity sha512-v8QmC17bv9he5Ep6zutaI9aQ2w/2NqySP0fejOKe7cacKpGUqsLIakpyd2FD7mfZu7pSCCtHYpRWR+h6yq+Ngg==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ngtools/webpack@12.2.7":
   version "12.2.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-12.2.7.tgz#864b66c0c80acbe6b0cb15ff205b7fbbca7f8d0e"
@@ -2049,6 +2056,11 @@ boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap@^4.0.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.0.tgz#97b9f29ac98f98dfa43bf7468262d84392552fd7"
+  integrity sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
