@@ -85,8 +85,15 @@
 
                         <div class="--wrapper">
                             <div class="space-setup__layout__content-details__title">SPACE PROFILE</div>
-                            <div class="space-setup__layout__content-details__revert-changes">REVERT CHANGES</div>
-                            <app-space-profile-form></app-space-profile-form>
+                            
+
+                            <div *ngIf="selectedSpace; else elseBlock">
+                                <app-space-profile-preview [selectedSpace] = "selectedSpace"></app-space-profile-preview>
+                            </div>
+                            <ng-template #elseBlock>
+                                <div class="space-setup__layout__content-details__revert-changes">REVERT CHANGES</div>
+                                <app-space-profile-form></app-space-profile-form>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

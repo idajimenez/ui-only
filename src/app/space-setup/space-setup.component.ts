@@ -42,6 +42,7 @@ export class SpaceSetupComponent implements OnInit {
     public legendVisible: string = 'spaceassignability';
     public spaceCount: number = 0;
     public currentSpaces: string[] = [];
+    public selectedSpace: object = {};
     
     public legendsConfig: {[key: string]: ILegend} = {
         spacetenant: {
@@ -107,6 +108,8 @@ export class SpaceSetupComponent implements OnInit {
                 this.currentSpaces.push(space);
             }
         } else {
+          // Pass found space to this.selectedSpace variable
+            this.selectedSpace = this.spaces.find(s => s.spacenum == space)
             this.currentSpaces = [space];
         }
     }

@@ -20,6 +20,7 @@ import { RenderSvgComponent } from './render-svg/render-svg.component';
 import { ButtonsComponent } from './buttons-reusable/buttons.component';
 import { CommonModule } from '@angular/common';
 import { SpaceProfileFormComponent } from './space-profile-form/space-profile-form.component';
+import { SpaceProfilePreviewComponent } from './space-profile-preview/space-profile-preview.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SpaceProfileFormComponent } from './space-profile-form/space-profile-fo
     TabsComponent,
     RenderSvgComponent,
     ButtonsComponent,
-    SpaceProfileFormComponent
+    SpaceProfileFormComponent,
+    SpaceProfilePreviewComponent
   ],
   imports: [
     CommonModule,
