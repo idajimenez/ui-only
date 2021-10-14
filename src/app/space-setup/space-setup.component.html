@@ -20,28 +20,48 @@
                 <div class="space-setup__layout__content">
                     <div class="space-setup__layout__content-preview">
                         <div class="space-setup__layout__content-preview__svg">
-                            <div id="svg"></div>
+                            <app-render-svg
+                                [url]="floorPlans[activeTabIndex].file"
+                                [callbackFunction]="setCurrentSpaces"
+                                [setSpaceCount]="setSpaceCount"
+                                [currentSpaces]="currentSpaces"
+                                [legends]="legendsConfig[legendVisible]"
+                                [legendVisible]="legendVisible"
+                                [data]='spaces'>
+                            </app-render-svg>
                         </div>
                         <div class="space-setup__layout__content-preview__tip">
                             <p><b>TIP: </b> Clicking a space from the floor plan map will show its space profile on the left information panel.</p>
                         </div>
                     </div>
 
-                    <div class="space-setup__layout__content-details">
+                    <div class="space-setup__layout__content-details" *ngIf="!currentSpaces.length">
                         <div class="space-setup__layout__content-details__space-count --wrapper">
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
-                            <div class="space-setup__layout__content-details__space-count__legend" *ngFor="let legend of floorPlans[activeTabIndex].legends;">
-                                <div
-                                    class="space-setup__layout__content-details__space-count__legend-color"
-                                    [ngClass]="{'--flexible': legend.type === 'flexible', '--unassigned': legend.type === 'unassigned', '--blocked': legend.type === 'blocked', '--fixed': legend.type === 'fixed'}"></div>
-                                <div><b>{{legend.total}}</b> {{legend.type}}</div>
+
+                            <div>
+                                <select (change)="onChangeSpaceStatus($event)">
+                                    <option value="spaceassignability">Space Assignability</option>
+                                    <option value="spacetenant">Space Tenant</option>
+                                    <option value="spacestatus">Space Status</option>
+                                </select>
+                            </div>
+
+                            <div class="space-setup__layout__content-details__space-count__legend" *ngFor="let visible of legendsConfig[legendVisible] | keyvalue;">
+                                <div>
+                                    <div
+                                        class="space-setup__layout__content-details__space-count__legend-color"
+                                        [ngStyle]="visible.value.legend"
+                                        ></div>
+                                </div>
+                                <div class="space-setup__layout__content-details__space-count__legend-value"><b>{{visible.value.count}}</b> {{visible.key}}</div>
                             </div>
                         </div>
 
                         <div class="space-setup__layout__content-details__space-changes --wrapper">
-                            <div class="space-setup__layout__content-details__title">SPACES CHANGES</div>
+                            <div class="space-setup__layout__content-details__title">FLOOR CAPACITY</div>
 
-                            <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
+                            <!-- <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
                                 <div>
                                     <p>{{change.fileName}}</p>
                                     <div class="space-setup__status --small --next"></div>
@@ -50,7 +70,30 @@
                                     <li>{{change.removedCount}} spaces removed</li>
                                     <li>{{change.addedCount}} spaces added</li>
                                 </ul>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="space-setup__layout__content-details" *ngIf="currentSpaces.length">
+                        <div class="space-setup__layout__content-details__space-title --wrapper">
+                            <!-- SEAT {{currentSpaces}} -->
+                           <label><span>{{currentSpaces.length}}</span> Selected Spaces </label>
+                            <div (click)="clearCurrentSpaces()">
+                                x <!-- < replace with actual icon > -->
                             </div>
+                        </div>
+
+                        <div class="--wrapper">
+                            <div class="space-setup__layout__content-details__title">SPACE PROFILE</div>
+                            
+
+                            <div *ngIf="selectedSpace; else elseBlock">
+                                <app-space-profile-preview [selectedSpace] = "selectedSpace"></app-space-profile-preview>
+                            </div>
+                            <ng-template #elseBlock>
+                                <div class="space-setup__layout__content-details__revert-changes">REVERT CHANGES</div>
+                                <app-space-profile-form></app-space-profile-form>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

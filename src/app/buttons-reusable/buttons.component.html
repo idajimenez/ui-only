@@ -1,0 +1,12 @@
+
+<div class="btn-container">
+  <button class="btn-container__button" (click)="toggleHover = !toggleHover">{{ titleData }} </button>
+  <div *ngIf="toggleHover==true" class="btn-container__list-container">
+    <ul>
+      <li *ngFor="let item of  itemData " class="list">
+        <button class="listData" (click)="onClick(item)">{{ item.viewValue }}</button>
+        
+      </li>
+    </ul>
+  </div>
+</div>

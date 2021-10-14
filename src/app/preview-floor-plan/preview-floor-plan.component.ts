@@ -30,7 +30,7 @@ export class PreviewFloorPlanComponent implements OnInit {
     }];
     public spaceCount: number = 0;
     public currentSpace: any = null;
-
+    items:any=['three','four','five']
     constructor() { }
 
     ngOnInit(): void {

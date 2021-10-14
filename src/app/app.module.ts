@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +17,11 @@ import { PreviewFloorPlanComponent } from './preview-floor-plan/preview-floor-pl
 import { SpaceSetupComponent } from './space-setup/space-setup.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { RenderSvgComponent } from './render-svg/render-svg.component';
+import { ButtonsComponent } from './buttons-reusable/buttons.component';
+import { CommonModule } from '@angular/common';
+import { SpaceProfileFormComponent } from './space-profile-form/space-profile-form.component';
+import { SpaceProfilePreviewComponent } from './space-profile-preview/space-profile-preview.component';
+
 
 @NgModule({
   declarations: [
@@ -19,9 +29,13 @@ import { RenderSvgComponent } from './render-svg/render-svg.component';
     PreviewFloorPlanComponent,
     SpaceSetupComponent,
     TabsComponent,
-    RenderSvgComponent
+    RenderSvgComponent,
+    ButtonsComponent,
+    SpaceProfileFormComponent,
+    SpaceProfilePreviewComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -29,7 +43,13 @@ import { RenderSvgComponent } from './render-svg/render-svg.component';
     NbLayoutModule,
     NbEvaIconsModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,7 +8,7 @@
             <div class="floor-plan-preview__layout">
                 <div class="floor-plan-preview__layout__tabs">
                     <div
-                        *ngFor="let item of floorPlans; let i = index" 
+                        *ngFor="let item of floorPlans; let i = index"
                         class="floor-plan-preview__layout__tab-item"
                         [class.--active-tab]="i === activeTabIndex"
                         (click)="handleTabChange(i)">
@@ -41,8 +41,12 @@
                         </div>
 
                         <div class="floor-plan-preview__layout__content-details__space-changes --wrapper"  *ngIf="!currentSpace">
-                            <div class="floor-plan-preview__layout__content-details__title" >SPACES CHANGES</div>
 
+
+                            <div class="floor-plan-preview__layout__content-details__title" >SPACES CHANGES</div>
+                            <!-- REUSABLE BUTTON WITH DROPDOWN -->
+                            <aio-buttons [titleData]="'Select space type'" [itemData]="items" ></aio-buttons>
+                            <br>
                             <div
                                 class="floor-plan-preview__layout__content-details__space-changes__item"
                                 *ngFor="let change of floorPlans[activeTabIndex].changes;">
@@ -78,6 +82,8 @@
         <div class="floor-plan-preview__buttons">
             <button>PREVIOUS</button>
             <button>SAVE & CONTINUE</button>
+
         </div>
+
     </div>
 </div>

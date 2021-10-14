@@ -118,11 +118,15 @@ $spacing: 20px;
 
             &-details {
                 border: 1px solid #A100FF40;
-                width: 267px;
+                width: 280px;
+                min-width: 280px;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
-
+                height: 69vh;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                
                 .--wrapper {
                     padding: 10px;
                     background-color: #FFFFFF;
@@ -143,6 +147,10 @@ $spacing: 20px;
                         align-items: center;
                         width: 50%;
                         float: left;
+
+                        &-value {
+                            white-space: nowrap;
+                        }
 
                         &-color {
                             border-radius: $border;
@@ -193,6 +201,22 @@ $spacing: 20px;
                 &__title {
                     @include bold-title;
                     margin-bottom: 10px;
+                    // border-bottom: 1px solid #e3e3e3;
+                    padding-bottom: 20px;
+                }
+
+                &__revert-changes {
+                    font-size: 10px;
+                    font-weight: bold;
+                    text-align: right;
+                    color: #460073;
+                }
+
+                &__space-title {
+                    font-size: 18px;
+                    color: #460073;
+                    display: flex;
+                    justify-content: space-between;
                 }
             }
         }
@@ -225,10 +249,4 @@ $spacing: 20px;
         }
     }
 
-}
-
-
-rect.cube {
-    color: cornflowerblue !important;
-    cursor: pointer;
 }
