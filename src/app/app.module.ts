@@ -21,6 +21,9 @@ import { ButtonsComponent } from './buttons-reusable/buttons.component';
 import { CommonModule } from '@angular/common';
 import { SpaceProfileFormComponent } from './space-profile-form/space-profile-form.component';
 import { SpaceProfilePreviewComponent } from './space-profile-preview/space-profile-preview.component';
+import { CustomeSelectTagComponent } from './custome-select-tag/custome-select-tag.component';
+import { NumberInputComponent } from './number-input/number-input.component';
+import { DigitOnlyDirective } from './digit-only.directive';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { SpaceProfilePreviewComponent } from './space-profile-preview/space-prof
     RenderSvgComponent,
     ButtonsComponent,
     SpaceProfileFormComponent,
-    SpaceProfilePreviewComponent
+    SpaceProfilePreviewComponent,
+    CustomeSelectTagComponent,
+    NumberInputComponent,
+    DigitOnlyDirective
   ],
   imports: [
     CommonModule,

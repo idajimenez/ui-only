@@ -38,7 +38,11 @@ export class SpaceSetupComponent implements OnInit {
         file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
 
+    // Existing Spaces
     public spaces: any[] = dummy;
+    // New Spaces
+    public newSpaces: any[] = [];
+
     public legendVisible: string = 'spaceassignability';
     public spaceCount: number = 0;
     public currentSpaces: string[] = [];

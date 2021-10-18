@@ -21,7 +21,7 @@ export class SpaceProfileFormComponent implements OnInit {
   })
 
   selectedValue: string = '';
-  public activeFunctionIndex: any;
+  public activeFunction: string = '';
   public selectedSpaceType: any;
 
   public functions: any = [
@@ -42,14 +42,14 @@ export class SpaceProfileFormComponent implements OnInit {
   ];
 
   spaceStatus: any[] = [
-    {value: 'vacant', label: 'Vacant'},
-    {value: 'offline', label: 'Offline'},
+    {value: 'Vacant', label: 'Vacant'},
+    {value: 'Offline', label: 'Offline'},
   ];
 
   gradeLevel: any[] = [
-    {value: 'asdesigned', label: 'As Designed'},
-    {value: 'compressed', label: 'Compressed'},
-    {value: 'partitionloss', label: 'Partition Loss'},
+    {value: 'As_Designed', label: 'As Designed'},
+    {value: 'Compressed', label: 'Compressed'},
+    {value: 'Partition_Loss', label: 'Partition Loss'},
   ];
 
   tenants: any[] = [
@@ -58,6 +58,9 @@ export class SpaceProfileFormComponent implements OnInit {
     {value: 'tgp', label: 'TGP'},
     {value: 'gs', label: 'GS'},
   ];
+
+  assignability: string[] = ['Fixed', 'Flexible', 'Blocked'];
+  week: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   shifts: any[] = [
     {value: '12:00 AM', label: '12:00 AM'},
@@ -86,6 +89,27 @@ export class SpaceProfileFormComponent implements OnInit {
     {value: '11:00 PM', label: '11:00 PM'},
   ];
 
+  public formData: any = {
+    "spaceid": 0,
+    "floorplanid": 0,
+    "spacefunction": '',
+    "spacetype": '',
+    "spacenum": '',
+    "spacetenant": '',
+    "spacestatus": '',
+    "spacegradelvl": '',
+    "spaceassignability": '',
+    "allowableweeklyschedule": '',
+    "seatutilizationtime": '',
+    "daysavailability": [],
+    "shiftstart": '',
+    "endstart": '',
+    "numofallowableproj": 0,
+    "numofallowableresource": 0,
+    "gaphours": 0,
+    "svgid": "svg1380"
+  }
+
 
   constructor(public fb: FormBuilder) { }
 
@@ -97,23 +121,65 @@ export class SpaceProfileFormComponent implements OnInit {
     alert(JSON.stringify(this.spaceForm.value))
   }
 
-  public handleFunctionChange(index: number) {
-    this.activeFunctionIndex = index;
+  public handleFunctionChange(value: string) {
+    this.formData.spacefunction = value;    
   }
 
-  public changeSpace(e: any) {
+  public handleSelectChange(e: any, key: string) {
     // this.spaceType.setValue(e.target.value, {
     //   test: true
     // })
     console.log(e.target.value)
+    if (key === 'spacetype' && !this.formData[key]) {
+      this.formData = {
+        ...this.formData,
+        spacetype: e.target.value,
+        spacestatus: 'Vacant',
+        spacetenant: 'Blank',
+        spacegradelvl: 'As_Designed',
+        spaceassignability: '',
+        daysavailability: [0, 1, 2, 3, 4, 5, 6],
+        shiftstart: '12:00 AM',
+        endstart: '11:00 PM',
+        numofallowableproj: 1,
+        numofallowableresource: 1,
+        gaphours: 0
+      }
+    } else {
+      this.formData[key] = e.target.value
+    }
   }
 
+  public handleAssignability(value: string) {
+    if (!this.formData.spacetype) return;
 
-  public handleSpaceType($event:any){
-    console.log($event); 
-      // this.selectedSpaceType = param;
+    this.formData.spaceassignability = value
   }
 
+  public handleDaysAvailable(value: number) {
+    if (!this.formData.spacetype) return;
+
+    const index = this.formData.daysavailability.findIndex((v: any) => value === v);
+
+    if (index !== -1) {
+      const updated = this.formData.daysavailability;
+
+      updated.splice(index, 1)
+
+      this.formData.daysavailability = updated
+    } else {
+      this.formData.daysavailability.push(value);
+    }
+  }
+
+  public handleChangeNumberInput(value: number, key: string) {
+    if (isNaN(value)) {
+      return;
+    }
+    this.formData[key] = value;
+
+    console.log(this.formData)
+  }
 }
 
 const dummy = [

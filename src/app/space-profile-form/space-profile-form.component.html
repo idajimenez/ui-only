@@ -1,30 +1,26 @@
 <div class='space-profile-form'>
+    <div class="space-profile-form__revert small">
+        REVERT CHANGES
+    </div>
+
     <form (ngSubmit)="onSubmit()">
         <div class='space-profile-form__function'>
             <div class='space-profile-form__function--title'>
                 <label>SPACE FUNCTION</label>
             </div>
-            <div class='space-profile-form__function--function-wrapper'>
-                <!-- <div 
-                    class='space-profile-form__function--buttons' 
-                    *ngFor='let function of functions; let i = index'
-                    [class.--active-button]='i === activeFunctionIndex'
-                    (click)='handleFunctionChange(i)'>
-                    <button>{{ function.label }}</button>
-                </div> -->
-                <!-- <mat-button-toggle-group 
-                    name="fontStyle" 
-                    aria-label="Font Style"  
-                    class='space-profile-form__function--buttons'
-                    *ngFor='let function of functions; let i = index'
-                    [class.--active-button]='i === activeFunctionIndex'
-                    (click)='handleFunctionChange(i)'>
-                    <mat-button-toggle value="bold">{{ function.label }}</mat-button-toggle>
-                </mat-button-toggle-group> -->
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" >
-                    <mat-button-toggle value="production">Production</mat-button-toggle>
-                    <mat-button-toggle value="room">Room</mat-button-toggle>
-                </mat-button-toggle-group>
+            <div class='space-profile-form__options'>
+                <div
+                    class='space-profile-form__options-item'
+                    [class.-active]="formData.spacefunction === 'Production'"
+                    (click)="handleFunctionChange('Production')">
+                    Production
+                </div>
+                <div
+                    class='space-profile-form__options-item'
+                    [class.-active]="formData.spacefunction === 'Room'"
+                    (click)="handleFunctionChange('Room')">
+                    Room
+                </div>
             </div>
         </div>
 
@@ -32,58 +28,52 @@
             <div class='space-profile-form__type--title'>
                 <label>SPACE TYPE</label>
             </div>
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select 
-                    matNativeControl 
-                    required 
-                    formControlName='spaceType'
-                    (onChange)='changeSpace'
-                    class='testSelect'
-                    formControlName=''>
-                    <option value='' disabled>Please select.</option>
-                    <option *ngFor="let type of types" [ngValue]="type.value">{{type.viewValue}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacefunction" (change)="handleSelectChange($event, 'spacetype')">
+                <option *ngFor="let type of types" [value]="type.value">
+                    {{type.viewValue}}
+                </option>
+            </select>
         </div>
         <div class='space-profile-form__status'>
             <div class='space-profile-form__status--title'>
                 <label>SPACE STATUS</label>
             </div>
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select matNativeControl required class='testSelect' >
-                    <option *ngFor="let status of spaceStatus" [value]="status.value">{{status.label}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacetype" (change)="handleSelectChange($event, 'spacestatus')">
+                <option *ngFor="let status of spaceStatus" [value]="status.value">
+                    {{status.label}}
+                </option>
+            </select>
         </div>
         <div class='space-profile-form__grade'>
             <div class='space-profile-form__grade--title'>
                 <label>SPACE GRADE LEVEL</label>
             </div>
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select matNativeControl required class='testSelect' >
-                    <option *ngFor="let level of gradeLevel" [value]="level.value">{{level.label}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacetype" (change)="handleSelectChange($event, 'spacegradelvl')">
+                <option *ngFor="let level of gradeLevel" [value]="level.value">{{level.label}}</option>
+            </select>
         </div>
         <div class='space-profile-form__tenant'>
             <div class='space-profile-form__tenant--title'>
                 <label>SPACE TENANT</label>
             </div>
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select matNativeControl required class='testSelect' >
-                    <option *ngFor="let tenant of tenants" [value]="tenant.value">{{tenant.label}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacetype" (change)="handleSelectChange($event, 'spacetenant')">
+                <option *ngFor="let tenant of tenants" [value]="tenant.value">{{tenant.label}}</option>
+            </select>
         </div>
 
         <div class='space-profile-form__assignability'>
             <div class='space-profile-form__assignability--title'>
                 <label>SPACE ASSIGNABILITY</label>
             </div>
-            <div class='space-profile-form__assignability--buttons'>
-                <button>Fixed</button>
-                <button>Flexible</button>
-                <button>Blocked</button>
+            <div class='space-profile-form__options'>
+                <div
+                    *ngFor="let value of assignability;"
+                    class='space-profile-form__options-item'
+                    [class.-active]="formData.spaceassignability === value"
+                    [class.-disabled]="!formData.spacetype"
+                    (click)="handleAssignability(value)">
+                    {{value}}
+                </div>
             </div>
         </div>
 
@@ -91,14 +81,15 @@
             <div class='space-profile-form__days-available--title'>
                 <label>DAYS AVAILABLE</label>
             </div>
-            <div class='space-profile-form__days-available--buttons'>
-                <button>S</button>
-                <button>M</button>
-                <button>T</button>
-                <button>W</button>
-                <button>T</button>
-                <button>F</button>
-                <button>S</button>
+            <div class='space-profile-form__options'>
+                <div
+                    *ngFor="let day of week; let i = index"
+                    class='space-profile-form__options-item'
+                    [class.-active]="formData.daysavailability.indexOf(i) > -1"
+                    [class.-disabled]="!formData.spacetype"
+                    (click)="handleDaysAvailable(i)">
+                    {{day}}
+                </div>
             </div>
         </div>
 
@@ -106,24 +97,17 @@
             <div class='space-profile-form__shifts--title'>
                 <label>SPACE START</label>
             </div>
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select matNativeControl required class='testSelect' >
-                    <option *ngFor="let shift of shifts" [value]="shift.value">{{shift.label}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacetype" (change)="handleSelectChange($event, 'shiftstart')">
+                <option *ngFor="let shift of shifts" [value]="shift.value">{{shift.label}}</option>
+            </select>
         </div>
         <div class='space-profile-form__shifts'>
             <div class='space-profile-form__shifts--title'>
                 <label>SPACE END</label>
             </div>
-            <!-- <div class="space-profile-form__function--dropdown">
-                <aio-buttons titleData=''></aio-buttons>
-            </div> -->
-            <mat-form-field appearance="fill" class='mat-form'>
-                <select matNativeControl required class='testSelect' >
-                    <option *ngFor="let shift of shifts" [value]="shift.value">{{shift.label}}</option>
-                </select>
-            </mat-form-field>
+            <select class="custom-select-tag" [disabled]="!formData.spacetype" (change)="handleSelectChange($event, 'endstart')">
+                <option *ngFor="let shift of shifts" [value]="shift.value">{{shift.label}}</option>
+            </select>
         </div>
 
         <!-- ALLOWABLE -->
@@ -131,31 +115,30 @@
             <div class='space-profile-form__allowable--title'>
                 <label>NUMBER OF ALLOWABLE PROJECTS</label>
             </div>
-            <div class="space-profile-form__allowable--input-buttons">
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
-                <input />
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
-            </div>
+
+            <app-number-input
+                [handleInputChange]="handleChangeNumberInput"
+                [dataKey]="'numofallowableproj'"
+                [isDisabled]="!formData.spacetype"></app-number-input>
         </div>
         <div class='space-profile-form__allowable'>
             <div class='space-profile-form__allowable--title'>
                 <label>NUMBER OF ALLOWABLE RESOURCES(EID)</label>
             </div>
-            <div class="space-profile-form__allowable--input-buttons">
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
-                <input />
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
-            </div>
+
+            <app-number-input
+                [handleInputChange]="handleChangeNumberInput"
+                [dataKey]="'numofallowableresource'"
+                [isDisabled]="!formData.spacetype"></app-number-input>
         </div>
         <div class='space-profile-form__allowable'>
             <div class='space-profile-form__allowable--title'>
                 <label>GAP HOURS</label>
             </div>
-            <div class="space-profile-form__allowable--input-buttons">
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'aria-hidden="false" aria-label="Example home icon">remove_circle_outline</mat-icon>
-                <input />
-                <mat-icon class='space-profile-form__allowable--input-buttons__icon'  aria-hidden="false" aria-label="Example home icon">add_circle_outline</mat-icon>
-            </div>
+            <app-number-input
+                [handleInputChange]="handleChangeNumberInput"
+                [dataKey]="'gaphours'"
+                [isDisabled]="!formData.spacetype"></app-number-input>
         </div>
 
     </form>
