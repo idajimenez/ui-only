@@ -1,4 +1,44 @@
 .space-profile-form {
+    &__revert {
+        color: #6C757D;
+        text-align: right;
+
+        &.-active {
+            color: #460B73;
+
+            &:hover {
+                color: #A100FF;
+            }
+        }
+    }
+
+    &__options {
+        display: flex;
+
+        &-item {
+            flex: 1;
+            border: 1px solid #CED4DA;
+            background: #ffffff;
+            color: #212529;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &.-active {
+                background: #A100FF;
+                color: #ffffff;
+            }
+
+            &.-disabled {
+                background: #CED4DA;
+                color: #8d9296;
+                cursor: default;
+            }
+        }
+    }
+
     &__function {
         margin: 10px 0;
 
@@ -216,4 +256,78 @@
 
 mat-form-field {
     width: 100%;
-  }
+}
+
+
+select {
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    width: 100%;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    margin-bottom: 0 !important;
+    margin-right: 20px;
+    border-color: #CED4DA;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    &:hover {
+        border-color: #A100FF;
+    }
+    
+    &.custom-select-tag {
+        background-image:
+            linear-gradient(45deg, transparent 50%,#CED4DA 50%),
+            linear-gradient(135deg,#CED4DA 50%, transparent 50%),
+            linear-gradient(to right, #CED4DA, #CED4DA);
+        background-position:
+            calc(100% - 20px) calc(1em + 6px),
+            calc(100% - 15px) calc(1em + 6px),
+            calc(100% - 2.5em) 0.5em;
+        background-size:
+            5px 5px,
+            5px 5px,
+            0px;
+        background-repeat: no-repeat;
+
+        &:disabled {
+            background: #CED4DA;
+            
+            &:hover {
+                border-color: #CED4DA;
+            }
+        }
+
+        &:focus {
+            background-image:
+                linear-gradient(314deg, #A100FF 50%, transparent 50%),
+                linear-gradient(225deg, transparent 50%, #A100FF 50%),
+                linear-gradient(to right, #CED4DA, #CED4DA);
+            background-size:
+                5px 5px,
+                5px 5px,
+                0px;
+            background-repeat: no-repeat;
+            border-color: #A100FF;
+            outline: 0;
+        }
+    }
+
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0#a100ff;
+    }.disabled {
+        background-color: #ebebe4;
+        
+        &:hover {
+            border-color: #CED4DA;
+        }
+    }
+}

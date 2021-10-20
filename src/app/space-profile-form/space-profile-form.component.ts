@@ -1,28 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 interface Types {
   value: string;
   viewValue: string;
 }
 
-interface Food {
-  value: string;
-  viewValue: string;
+const defaultValues = {
+  "spaceid": 0,
+  "floorplanid": 0,
+  "spacefunction": '',
+  "spacetype": '',
+  "spacenum": '',
+  "spacetenant": '',
+  "spacestatus": '',
+  "spacegradelvl": '',
+  "spaceassignability": '',
+  "allowableweeklyschedule": '',
+  "seatutilizationtime": '',
+  "daysavailability": [],
+  "shiftstart": '',
+  "endstart": '',
+  "numofallowableproj": 0,
+  "numofallowableresource": 0,
+  "gaphours": 0,
+  "svgid": ""
 }
-
 @Component({
   selector: 'app-space-profile-form',
   templateUrl: './space-profile-form.component.html',
   styleUrls: ['./space-profile-form.component.scss']
 })
 export class SpaceProfileFormComponent implements OnInit {
-  public spaceForm = this.fb.group({
-    spaceType: ['']
-  })
+  @Input() currentSpaces: any[] = [];
 
   selectedValue: string = '';
-  public activeFunctionIndex: any;
+  public activeFunction: string = '';
   public selectedSpaceType: any;
+  public selectedSpaceIndex: number | undefined;
 
   public functions: any = [
     {
@@ -42,22 +55,25 @@ export class SpaceProfileFormComponent implements OnInit {
   ];
 
   spaceStatus: any[] = [
-    {value: 'vacant', label: 'Vacant'},
-    {value: 'offline', label: 'Offline'},
+    {value: 'Vacant', label: 'Vacant'},
+    {value: 'Offline', label: 'Offline'},
   ];
 
   gradeLevel: any[] = [
-    {value: 'asdesigned', label: 'As Designed'},
-    {value: 'compressed', label: 'Compressed'},
-    {value: 'partitionloss', label: 'Partition Loss'},
+    {value: 'As_Designed', label: 'As Designed'},
+    {value: 'Compressed', label: 'Compressed'},
+    {value: 'Partition_Loss', label: 'Partition Loss'},
   ];
 
   tenants: any[] = [
-    {value: 'blank', label: 'Blank'},
-    {value: 'bpo', label: 'BPO'},
-    {value: 'tgp', label: 'TGP'},
-    {value: 'gs', label: 'GS'},
+    {value: 'Blank', label: 'Blank'},
+    {value: 'BPO', label: 'BPO'},
+    {value: 'TGP', label: 'TGP'},
+    {value: 'GS', label: 'GS'},
   ];
+
+  assignability: string[] = ['Fixed', 'Flexible', 'Blocked'];
+  week: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   shifts: any[] = [
     {value: '12:00 AM', label: '12:00 AM'},
@@ -85,37 +101,156 @@ export class SpaceProfileFormComponent implements OnInit {
     {value: '10:00 PM', label: '10:00 PM'},
     {value: '11:00 PM', label: '11:00 PM'},
   ];
+  
+  public newSpaces: any[] = [];
+  public formData: any = defaultValues;
+  public shouldClearForm: boolean = false;
 
+  constructor() { }
 
-  constructor(public fb: FormBuilder) { }
+  ngOnInit() {}
 
-  ngOnInit() {
-   
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.currentSpaces) {
+        this.shouldClearForm = true;
+
+        console.log(changes.currentSpaces.currentValue)
+
+        // Dito dapat makuha niya lahat ng selected
+        const currentSelectedSpaces = changes.currentSpaces.currentValue;
+        const existingSpaces = this.newSpaces.filter((value: any) => currentSelectedSpaces.indexOf(value.spacenum) !== -1);
+
+        if (existingSpaces.length) {
+            this.formData = this.newSpaces[0];
+        } else {
+            const selected = currentSelectedSpaces.map((num: string) => ({
+                ...defaultValues,
+                spacenum: num
+            }))
+            console.log('selected', selected);
+
+            this.newSpaces = [
+                ...this.newSpaces,
+                ...selected
+            ];
+            this.formData = selected[0];
+        }
+        console.log(this.newSpaces, this.formData)
+        
+        setTimeout(() => {
+            this.shouldClearForm = false;
+        }, 300);
+    }
   }
 
-  onSubmit() {
-    alert(JSON.stringify(this.spaceForm.value))
+  updateNewSpaces = () => {
+    const selected = this.currentSpaces.map((num: string) => ({
+        ...this.formData,
+        spacenum: num
+    }))
+
+    this.newSpaces = this.newSpaces.map((newSpace) => {
+        if (this.currentSpaces.indexOf(newSpace.spacenum) !== -1) {
+            return ({...this.formData, spacenum: newSpace.spacenum });
+        } else {
+            return newSpace;
+        }
+    })
   }
 
-  public handleFunctionChange(index: number) {
-    this.activeFunctionIndex = index;
+  public handleFunctionChange(value: string) {
+    this.formData.spacefunction = value;
+
+    this.updateNewSpaces();
   }
 
-  public changeSpace(e: any) {
-    // this.spaceType.setValue(e.target.value, {
-    //   test: true
-    // })
-    console.log(e.target.value)
+  public handleSelectChange = (e: any, key: string) => {
+    if (key === 'spacetype' && !this.formData[key]) {
+      this.formData = {
+        ...this.formData,
+        spacetype: e.target.value,
+        spacestatus: 'Vacant',
+        spacetenant: 'Blank',
+        spacegradelvl: 'As_Designed',
+        spaceassignability: '',
+        daysavailability: [0, 1, 2, 3, 4, 5, 6],
+        shiftstart: '12:00 AM',
+        endstart: '11:00 PM',
+        numofallowableproj: 1,
+        numofallowableresource: 1,
+        gaphours: 0
+      }
+    } else {
+      this.formData[key] = e.target.value
+    }
+
+    this.updateNewSpaces();
   }
 
+  public handleAssignability = (value: string) => {
+    if (!this.formData.spacetype) return;
 
-  public handleSpaceType($event:any){
-    console.log($event); 
-      // this.selectedSpaceType = param;
+    this.formData.spaceassignability = value;
+
+    this.updateNewSpaces()
   }
 
+  public handleDaysAvailable = (value: number) => {
+    if (!this.formData.spacetype) return;
+
+    const index = this.formData.daysavailability.findIndex((v: any) => value === v);
+
+    if (index !== -1) {
+      const updated = this.formData.daysavailability;
+
+      updated.splice(index, 1)
+
+      this.formData.daysavailability = updated
+    } else {
+      this.formData.daysavailability.push(value);
+    }
+
+    this.updateNewSpaces();
+  }
+
+  public handleChangeNumberInput = (value: number, key: string) => {
+    if (isNaN(value)) {
+      return;
+    }
+    this.formData[key] = value;
+
+    this.updateNewSpaces();
+  }
 }
 
+// {
+//   "spaceid": 0,
+//   "floorplanid": 0,
+//   "spacefunction": "Room",
+//   "spacetype": "typeC",
+//   "spacenum": "",
+//   "spacetenant": "tgp",
+//   "spacestatus": "Offline",
+//   "spacegradelvl": "Partition_Loss",
+//   "spaceassignability": "Flexible",
+//   "allowableweeklyschedule": "",
+//   "seatutilizationtime": "",
+//   "daysavailability": [
+//     0,
+//     1,
+//     2,
+//     3,
+//     4,
+//     5,
+//     6
+//   ],
+//   "shiftstart": "12:00 AM",
+//   "endstart": "11:00 PM",
+//   "numofallowableproj": 1,
+//   "numofallowableresource": 4,
+//   "gaphours": 2,
+//   "svgid": "svg1380"
+// }
 const dummy = [
   {
     "spaceid": 0,

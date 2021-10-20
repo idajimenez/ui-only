@@ -39,12 +39,10 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.legendVisible) {
-            console.log(changes.legendVisible);
             this.setupSvgElements();
         }
 
         if (changes.currentSpaces) {
-            console.log(changes.currentSpaces, this.currentSpaces)
             this.handleHighlightSelected();
         }
     }
@@ -65,7 +63,8 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
     public async downloadSvg() {
         try {
-            // const svgString = await fetch(this.url).then(resp => resp.text());
+            const svgString = await fetch('./floorplan.svg').then(resp => resp.text());
+            console.log(svgString)
             this.downloadedSvg = sample;
             this.setupSvgElements();
             this.isDownloadingSvg = false;

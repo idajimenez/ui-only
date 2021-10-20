@@ -1,109 +1,69 @@
 <div class='space-profile-form'>
-        <div class='space-profile-form__function'>
-            <div class='space-profile-form__function--title'>
-                <label>SPACE FUNCTION</label>
-            </div>
-            <div class='space-profile-form__function--function-wrapper'>
-                <!-- <div 
-                    class='space-profile-form__function--buttons' 
-                    *ngFor='let function of functions; let i = index'
-                    [class.--active-button]='i === activeFunctionIndex'
-                    (click)='handleFunctionChange(i)'>
-                    <button>{{ function.label }}</button>
-                </div> -->
-                <!-- <mat-button-toggle-group 
-                    name="fontStyle" 
-                    aria-label="Font Style"  
-                    class='space-profile-form__function--buttons'
-                    *ngFor='let function of functions; let i = index'
-                    [class.--active-button]='i === activeFunctionIndex'
-                    (click)='handleFunctionChange(i)'>
-                    <mat-button-toggle value="bold">{{ function.label }}</mat-button-toggle>
-                </mat-button-toggle-group> -->
-               <p>{{selectedSpace.spacefunction}}</p>
-            </div>
-        </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE FUNCTION</b></p>
+        <p>{{selectedSpace.spacefunction}}</p>
+    </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE TYPE</b></p>
+        <p>{{selectedSpace.spacetype}}</p>
+    </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE STATUS</b></p>
+        <p>{{ selectedSpace.spacestatus }}</p>
+    </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE GRADE LEVEL</b></p>
+        <p>{{ selectedSpace.spacegradelvl }}</p>
+    </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE TENANT</b></p>
+        <p>{{ selectedSpace.spacetenant }}</p>
+    </div>
 
-        <div class='space-profile-form__type'>
-            <div class='space-profile-form__type--title'>
-                <label>SPACE TYPE</label>
-            </div>
-            <p>{{selectedSpace.spacetype}}</p>
-        </div>
-        <div class='space-profile-form__status'>
-            <div class='space-profile-form__status--title'>
-                <label>SPACE STATUS</label>
-            </div>
-            <p>{{ selectedSpace.spacestatus }}</p>
-        </div>
-        <div class='space-profile-form__grade'>
-            <div class='space-profile-form__grade--title'>
-                <label>SPACE GRADE LEVEL</label>
-            </div>
-            <p>{{ selectedSpace.spacegradelvl }}</p>
-        </div>
-        <div class='space-profile-form__tenant'>
-            <div class='space-profile-form__tenant--title'>
-                <label>SPACE TENANT</label>
-            </div>
-            <p>{{ selectedSpace.spacetenant }}</p>
-        </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE ASSIGNABILITY</b></p>
+        <p>{{ selectedSpace.spaceassignability}}</p>
+    </div>
 
-        <div class='space-profile-form__assignability'>
-            <div class='space-profile-form__assignability--title'>
-                <label>SPACE ASSIGNABILITY</label>
-            </div>
-            <p>{{ selectedSpace.spaceassignability}}</p>
+    <div>
+        <p class="mb-0 small"><b>DAYS AVAILABLE</b></p>
+        <div class='space-profile-form__days-available--buttons'>
+            <button>S</button>
+            <button>M</button>
+            <button>T</button>
+            <button>W</button>
+            <button>T</button>
+            <button>F</button>
+            <button>S</button>
         </div>
+    </div>
 
-        <div class='space-profile-form__days-available'>
-            <div class='space-profile-form__days-available--title'>
-                <label>DAYS AVAILABLE</label>
-            </div>
-            <div class='space-profile-form__days-available--buttons'>
-                <button>S</button>
-                <button>M</button>
-                <button>T</button>
-                <button>W</button>
-                <button>T</button>
-                <button>F</button>
-                <button>S</button>
-            </div>
-        </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE START</b></p>
+        <p>{{ selectedSpace.shiftstart }}</p>
+    </div>
+    <div>
+        <p class="mb-0 small"><b>SPACE END</b></p>
+        <p>{{ selectedSpace.endstart }}</p>
+    </div>
 
-        <div class='space-profile-form__shifts'>
-            <div class='space-profile-form__shifts--title'>
-                <label>SPACE START</label>
-            </div>
-            <p>{{ selectedSpace.shiftstart }}</p>
+    <!-- ALLOWABLE -->
+    <div class='space-profile-form__allowable'>
+        <div class='space-profile-form__allowable--title'>
+            <label>NUMBER OF ALLOWABLE PROJECTS</label>
         </div>
-        <div class='space-profile-form__shifts'>
-            <div class='space-profile-form__shifts--title'>
-                <label>SPACE END</label>
-            </div>
-            <!-- <div class="space-profile-form__function--dropdown">
-                <aio-buttons titleData=''></aio-buttons>
-            </div> -->
-            <p>{{ selectedSpace.endstart }}</p>
+        <p>{{ selectedSpace.numofallowableproj}}</p>
+    </div>
+    <div class='space-profile-form__allowable'>
+        <div class='space-profile-form__allowable--title'>
+            <label>NUMBER OF ALLOWABLE RESOURCES(EID)</label>
         </div>
-
-        <!-- ALLOWABLE -->
-        <div class='space-profile-form__allowable'>
-            <div class='space-profile-form__allowable--title'>
-                <label>NUMBER OF ALLOWABLE PROJECTS</label>
-            </div>
-            <p>{{ selectedSpace.numofallowableproj}}</p>
+        <p>{{ selectedSpace.numofallowableresource}}</p>
+    </div>
+    <div class='space-profile-form__allowable'>
+        <div class='space-profile-form__allowable--title'>
+            <label>GAP HOURS</label>
         </div>
-        <div class='space-profile-form__allowable'>
-            <div class='space-profile-form__allowable--title'>
-                <label>NUMBER OF ALLOWABLE RESOURCES(EID)</label>
-            </div>
-            <p>{{ selectedSpace.numofallowableresource}}</p>
-        </div>
-        <div class='space-profile-form__allowable'>
-            <div class='space-profile-form__allowable--title'>
-                <label>GAP HOURS</label>
-            </div>
-            <p>{{ selectedSpace.gaphours}}</p>
-        </div>
+        <p>{{ selectedSpace.gaphours}}</p>
+    </div>
 </div>

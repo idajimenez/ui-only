@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, Pipe } from '@angular/core';
+import { SpaceProfileFormComponent } from '../space-profile-form/space-profile-form.component';
+
 interface ILegend {
     [key: string]: {
         legend: { background: string, border?: string },
@@ -13,6 +15,8 @@ interface ILegend {
     styleUrls: ['./space-setup.component.scss']
 })
 export class SpaceSetupComponent implements OnInit {
+    @ViewChild(SpaceProfileFormComponent) SpaceForm: any; 
+
     public activeTabIndex: number = 0;
     public floorPlans: any[] = [{
         fileName: 'FacilityA_FL1_09-01-2021',
@@ -38,10 +42,15 @@ export class SpaceSetupComponent implements OnInit {
         file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
 
+    // Existing Spaces
     public spaces: any[] = dummy;
+    // New Spaces
+    public newSpaces: any[] = [];
+
     public legendVisible: string = 'spaceassignability';
     public spaceCount: number = 0;
     public currentSpaces: string[] = [];
+    public selectedSpaceNumber: string = '';
     public selectedSpace: object = {};
 
     public legendsConfig: {[key: string]: ILegend} = {
@@ -67,6 +76,10 @@ export class SpaceSetupComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    public handleUpdateNewSpaces = (): void => {
+      console.log('Data', this.SpaceForm.formData)
     }
 
     public setSpaceCount = (count: number): void => {
@@ -112,10 +125,14 @@ export class SpaceSetupComponent implements OnInit {
             this.selectedSpace = this.spaces.find(s => s.spacenum == space)
             this.currentSpaces = [space];
         }
+
+        console.log(this.currentSpaces)
+        this.selectedSpaceNumber = space;
     }
 
     public clearCurrentSpaces = (): void => {
         this.currentSpaces = [];
+        this.selectedSpaceNumber = '';
     }
 
     onChangeSpaceStatus(e:any) {

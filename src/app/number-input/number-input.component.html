@@ -1,0 +1,20 @@
+<div class="number-input">
+    <div>
+        <div class="number-input__minus" (click)="handleUpdateCount('dec')" [class.-disabled]="isDisabled">
+            -
+        </div>
+    </div>
+    <input
+        class="number-input__input"
+        [value]="value"
+        [disabled]="isDisabled"
+        type="text"
+        (change)="handleChange($event)"
+        [digitOnly]="true"
+        inputmode="numeric" pattern="[0-9]*" />
+    <div>
+        <div class="number-input__plus" (click)="handleUpdateCount('inc')" [class.-disabled]="isDisabled">
+            +
+        </div>
+    </div>
+</div>

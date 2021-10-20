@@ -110,11 +110,12 @@
 
 
                             <div *ngIf="selectedSpace; else elseBlock">
-                                <app-space-profile-preview [selectedSpace] = "selectedSpace"></app-space-profile-preview>
+                                <div class='space-profile__divider'></div>
+                                <app-space-profile-preview [selectedSpace]="selectedSpace"></app-space-profile-preview>
                             </div>
                             <ng-template #elseBlock>
-                                <div class="space-setup__layout__content-details__revert-changes">REVERT CHANGES</div>
-                                <app-space-profile-form></app-space-profile-form>
+                                <div class='space-profile__divider mb-1'></div>
+                                <app-space-profile-form [currentSpaces]="currentSpaces"></app-space-profile-form>
                             </ng-template>
                         </div>
                     </div>
@@ -124,7 +125,7 @@
 
         <div class="space-setup__buttons">
             <button>PREVIOUS</button>
-            <button>SAVE & CONTINUE</button>
+            <button (click)="handleUpdateNewSpaces()">SAVE & CONTINUE</button>
         </div>
     </div>
 </div>
