@@ -15,6 +15,11 @@ $spacing: 20px;
         margin: 0;
     }
 
+    &__select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
     &__card {
         border-radius: $border;
         box-shadow: 0px 0px 4px #00000029;
@@ -30,7 +35,7 @@ $spacing: 20px;
         &__header {
             display: flex;
             align-items: center;
-            
+
             &-title {
                 @include bold-title;
 
@@ -98,7 +103,7 @@ $spacing: 20px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    
+
                     > div {
                         margin: 0 auto;
                         // height: ;
@@ -126,7 +131,19 @@ $spacing: 20px;
                 height: 69vh;
                 overflow-y: scroll;
                 overflow-x: hidden;
-                
+
+                &__body {
+
+                  & label {
+                    font-weight: 700;
+                    font-size: 10px;
+                  }
+
+                  & span {
+                    line-height: 1.5;
+                  }
+                }
+
                 .--wrapper {
                     padding: 10px;
                     background-color: #FFFFFF;
@@ -249,4 +266,11 @@ $spacing: 20px;
         }
     }
 
+  .space-select {
+    width: 100% !important;
+    margin: 10px 0;
+    padding: 15px 5px;
+  }
 }
+
+

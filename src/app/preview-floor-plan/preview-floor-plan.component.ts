@@ -27,6 +27,26 @@ export class PreviewFloorPlanComponent implements OnInit {
             addedCount: 4
         }],
         file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
+    }, {
+      fileName: 'FacilityA_FL1_09-01-2021',
+      isUploaded: false,
+      spaceCount: 547,
+      changes: [{
+          fileName: 'FacilityA_FL1_09-01-2020',
+          removedCount: 52,
+          addedCount: 4
+      }],
+      file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
+    }, {
+      fileName: 'FacilityA_FL1_09-01-2021',
+      isUploaded: false,
+      spaceCount: 547,
+      changes: [{
+          fileName: 'FacilityA_FL1_09-01-2020',
+          removedCount: 52,
+          addedCount: 4
+      }],
+      file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
     public spaceCount: number = 0;
     public currentSpace: any = null;

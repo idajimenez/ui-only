@@ -8,7 +8,7 @@
             <div class="space-setup__layout">
                 <div class="space-setup__layout__tabs">
                     <div
-                        *ngFor="let item of floorPlans; let i = index" 
+                        *ngFor="let item of floorPlans; let i = index"
                         class="space-setup__layout__tab-item"
                         [class.--active-tab]="i === activeTabIndex"
                         (click)="handleTabChange(i)">
@@ -40,7 +40,7 @@
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
 
                             <div>
-                                <select (change)="onChangeSpaceStatus($event)">
+                                <select class="space-select" (change)="onChangeSpaceStatus($event)">
                                     <option value="spaceassignability">Space Assignability</option>
                                     <option value="spacetenant">Space Tenant</option>
                                     <option value="spacestatus">Space Status</option>
@@ -60,6 +60,28 @@
 
                         <div class="space-setup__layout__content-details__space-changes --wrapper">
                             <div class="space-setup__layout__content-details__title">FLOOR CAPACITY</div>
+
+                            <div class="space-setup__layout__content-details__body">
+                              <label>
+                                TOTAL PRODUCTION SPACES
+                              </label><br>
+                              <span>497</span><br>
+                              <label>
+                                CAPACITY THRESHOLD
+                              </label><br>
+                              <div>
+                                <select class="space-select">
+                                    <option value="100%">100%</option>
+                                    <option value="90%">90%</option>
+                                    <option value="80%">80%</option>
+                                </select>
+                              </div>
+                              <label>
+                                ALLOWABLE
+                              </label><br>
+                              <span>149</span>
+                            </div>
+
 
                             <!-- <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
                                 <div>
@@ -85,7 +107,7 @@
 
                         <div class="--wrapper">
                             <div class="space-setup__layout__content-details__title">SPACE PROFILE</div>
-                            
+
 
                             <div *ngIf="selectedSpace; else elseBlock">
                                 <app-space-profile-preview [selectedSpace] = "selectedSpace"></app-space-profile-preview>

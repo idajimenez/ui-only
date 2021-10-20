@@ -43,7 +43,7 @@ export class SpaceSetupComponent implements OnInit {
     public spaceCount: number = 0;
     public currentSpaces: string[] = [];
     public selectedSpace: object = {};
-    
+
     public legendsConfig: {[key: string]: ILegend} = {
         spacetenant: {
             Blank: { legend: { background: '#CED4DA' }, count: 0, isDefault: true },
