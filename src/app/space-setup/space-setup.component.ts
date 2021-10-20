@@ -79,7 +79,7 @@ export class SpaceSetupComponent implements OnInit {
     }
 
     public handleUpdateNewSpaces = (): void => {
-      console.log('Data', this.SpaceForm.formData)
+      console.log('Data', this.SpaceForm.newSpaces)
     }
 
     public setSpaceCount = (count: number): void => {
