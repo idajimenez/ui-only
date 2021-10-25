@@ -23,7 +23,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     public selectedItems: any[] = [];
     public selectedDocuments: any[] = [];
 
-    public downloadedSvg: string = '';
+    public downloadedSvg: string = sample;
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
@@ -43,6 +43,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         }
 
         if (changes.currentSpaces) {
+            console.log(changes.currentSpaces, this.currentSpaces)
             this.handleHighlightSelected();
         }
     }
@@ -52,9 +53,10 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         const defaultLegend = Object.keys(this.legends).find((value: string) => this.legends[value].isDefault);
 
         rect.forEach((space) => {
-            if (this.currentSpaces.includes(space.id)) {
-                console.log(true)
-                space.style.fill = '#A100FF';
+            const index = this.currentSpaces.findIndex((item) => item === space.id);
+            
+            if (index !== -1) {
+                space.style.fill = '#7500C0';
             } else {
                 this.handleConfig(space, defaultLegend!);
             }
@@ -63,8 +65,9 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
     public async downloadSvg() {
         try {
-            const svgString = await fetch('./floorplan.svg').then(resp => resp.text());
-            console.log(svgString)
+            // const svgString = await fetch(this.url).then(resp => resp.text());
+            // console.log(svgString);
+            // console.log(this.url);
             this.downloadedSvg = sample;
             this.setupSvgElements();
             this.isDownloadingSvg = false;
@@ -92,7 +95,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         const rect = el.querySelectorAll('rect');
 
         let ids: string[] = [];
-
+        
         this.setSpaceCount && this.setSpaceCount!(rect.length);
         const defaultLegend = Object.keys(this.legends).find((value: string) => this.legends[value].isDefault);
         
@@ -128,6 +131,8 @@ export class RenderSvgComponent implements OnInit, OnChanges {
                     item.style.stroke = '#A100FF';
                 }
             }
+        } else {
+            item.style.fill = '#A100FF';
         }
     }
 
@@ -222,18 +227,19 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         if (e.shiftKey) {
             // trigger select + SHIFT key here
             this.callbackFunction!(e.target.id, true);
-            e.target.style.fill = '#A100FF';
+            e.target.style.fill = '#7500C0';
         } else {
             this.callbackFunction!(e.target.id);
         }
     }
 
-    public someMethod(){
-
+    public handleZoom(actionType: 'inc' | 'dec') {
+        
     }
 }
 
 const sample = `
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -20704,4 +20710,5 @@ AAAAAAAAAAAAAAAgRZYAAAAAAAAAAAAAAABCtgNTlfiQp+9lvAAAAABJRU5ErkJggg==
     </rect>
   </g>
 </svg>
+
 `

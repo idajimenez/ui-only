@@ -1,8 +1,42 @@
 .render-svg {
+    position: relative;
+
     #svg {
         max-height: 70vh;
         overflow: scroll;
         max-width: 75vw;
+    }
 
+    &__zoom {
+        box-shadow: 0 0 5px 0 #00000064;
+        padding: 0 5px;
+        margin-top: 3px;
+        height: 59px;
+        width: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        &-control {
+            height: 28px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            background-color: #fff;
+
+            &:first-of-type {
+                border-bottom: 2px solid #E5E5E5;
+            }
+
+            &:last-of-type {
+                font-size: 23px;
+            }
+        }
     }
 }

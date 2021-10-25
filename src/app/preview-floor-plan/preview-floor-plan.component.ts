@@ -29,7 +29,7 @@ export class PreviewFloorPlanComponent implements OnInit {
         file: 'https://svg-storage-smtv2.s3.ap-southeast-1.amazonaws.com/floorplan_05f.svg'
     }];
     public spaceCount: number = 0;
-    public currentSpace: any = null;
+    public currentSpaces: any[] = [];
     items:any=['three','four','five']
     constructor() { }
 
@@ -42,11 +42,11 @@ export class PreviewFloorPlanComponent implements OnInit {
 
     public setCurrentSpace = (space: any): void => {
         console.log('space', space);
-        this.currentSpace = space;
+        this.currentSpaces = [space];
     }
 
     public clearCurrentSpace = (): void => {
-        this.currentSpace = null;
+        this.currentSpaces = [];
     }
 
     public setSpaceCount = (count: number): void => {

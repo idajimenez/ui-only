@@ -4,4 +4,9 @@
     <div *ngIf="isDownloadError">
         Failed to download floor plan
     </div>
+
+    <div *ngIf="!isDownloadError" class="render-svg__zoom">
+        <div class="render-svg__zoom-control" (click)="handleZoom('inc')"> + </div>
+        <div class="render-svg__zoom-control" (click)="handleZoom('dec')"> - </div>
+    </div>
 </div>

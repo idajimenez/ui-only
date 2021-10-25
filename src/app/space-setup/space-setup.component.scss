@@ -79,6 +79,7 @@ $spacing: 20px;
 
         &__content {
             display: flex;
+            height: 70vh;
 
             &-preview {
                 background-color: #FFFFFF;
@@ -122,8 +123,8 @@ $spacing: 20px;
                 min-width: 280px;
                 padding: 10px;
                 display: flex;
+                height: 100%;
                 flex-direction: column;
-                height: 69vh;
                 overflow-y: scroll;
                 overflow-x: hidden;
                 
@@ -134,10 +135,6 @@ $spacing: 20px;
 
                     &:not(:last-of-type) {
                         margin-bottom: 10px;
-                    }
-
-                    &:last-of-type {
-                        flex: 1;
                     }
                 }
 
