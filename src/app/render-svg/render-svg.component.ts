@@ -1,3 +1,4 @@
+import { TestServicesService } from './../services/test-services.service';
 declare var Snap: any;
 declare var mina: any;
 
@@ -27,15 +28,33 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
-    constructor() {
+    constructor(
+      public testService: TestServicesService
+    ) {
         // document.addEventListener('mousemove', (event) => {
         //     console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
         // });
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.downloadSvg();
+        let x = await this.data;
+        console.log(x);
+        // !IMPORTANT
+        // THIS FUNCTION REFRESH WHAT EVERY INSIDE THE RESPONSE EVERYTIME YOU TRIGGER THE PASSDATA FUNCTION
+        this.testService.liveAutoRefresh().subscribe(() => {
+          this.getData();
+        })
+        // END
     }
+
+    // !IMPORTANT
+    // GETTING THE TEMP DATA FROM THE SERVICE
+    async getData() {
+      let data = await this.testService.tempData;
+      console.log(data);
+    }
+    // END
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.legendVisible) {

@@ -1,5 +1,9 @@
+import { TestServicesService } from './../services/test-services.service';
 import { Component, OnInit, ViewChild, Pipe } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 import { SpaceProfileFormComponent } from '../space-profile-form/space-profile-form.component';
+import { Observable } from 'rxjs';
 
 interface ILegend {
     [key: string]: {
@@ -15,7 +19,7 @@ interface ILegend {
     styleUrls: ['./space-setup.component.scss']
 })
 export class SpaceSetupComponent implements OnInit {
-    @ViewChild(SpaceProfileFormComponent) SpaceForm: any; 
+    @ViewChild(SpaceProfileFormComponent) SpaceForm: any;
 
     public activeTabIndex: number = 0;
     public floorPlans: any[] = [{
@@ -43,7 +47,7 @@ export class SpaceSetupComponent implements OnInit {
     }];
 
     // Existing Spaces
-    public spaces: any[] = dummy;
+    public spaces: any[] = [];
     // New Spaces
     public newSpaces: any[] = [];
 
@@ -72,14 +76,28 @@ export class SpaceSetupComponent implements OnInit {
             Unassigned: { legend: { background: '#FFFFFF', border: '1px solid #A100FF' }, count: 0, isDefault: true }
         }
     }
+    public spaceForms: any = [];
 
-    constructor() { }
+    constructor(
+      private dialog: MatDialog,
+      private testService: TestServicesService
+    ) { }
 
     ngOnInit(): void {
     }
 
+    // !IMPORTANT
+    // PASSDATA TO SERVICE BY CLICK FUNCTION OR ANY FUNCTION YOU LIKE
+    addData() {
+      let data = {
+        isAdjacentEnabled: true
+      }
+      this.testService.passData(data);
+    }
+    // END
+
     public handleUpdateNewSpaces = (): void => {
-      console.log('Data', this.SpaceForm.formData)
+      console.log('Data', this.spaceForms);
     }
 
     public setSpaceCount = (count: number): void => {
@@ -87,25 +105,27 @@ export class SpaceSetupComponent implements OnInit {
         this.countSpaces();
     }
 
-    private countSpaces() {
+    public countSpaces() {
         Object.keys(this.legendsConfig).forEach((key: any) => {
-            const arrayWithStatus = Object.keys(this.legendsConfig[key]).filter((value: any) => !this.legendsConfig[key][value].isDefault);
-            const status = Object.keys(this.legendsConfig[key]).reduce((value: any, currentValue) => {
-                value[currentValue] = {
-                    ...this.legendsConfig[key][currentValue],
-                    count: /Unassigned|Occupied|Blank/.test(currentValue)
-                        ? this.spaceCount - (this.spaces.filter((data: any) => {
-                            const index = arrayWithStatus.findIndex(status => status === data[key])
-                            return index;
-                        }).length) || 0
-                        : this.spaces.filter((data: any) => data[key] === currentValue).length || 0
-                }
+          const arrayWithStatus = Object.keys(this.legendsConfig[key]).filter((value: any) => !this.legendsConfig[key][value].isDefault);
+          const status = Object.keys(this.legendsConfig[key]).reduce((value: any, currentValue) => {
+            // console.log(`legends value =`, value, `and currentValue = `, currentValue)
+              value[currentValue] = {
+                  ...this.legendsConfig[key][currentValue],
+                  count: /Unassigned|Occupied|Blank/.test(currentValue)
+                      ? this.spaceCount - (this.spaces.filter((data: any) => {
+                          console.log(`spaces data =`, data[key]);
+                          const index = arrayWithStatus.findIndex(status => status === data[key]) + 1; //added new + 1
+                          console.log(`index = ${index}`);
+                          return index;
+                      }).length) || 0
+                      : this.spaces.filter((data: any) => data[key] === currentValue).length || 0
+              }
+              return value;
+          }, {});
 
-                return value;
-            }, {});
-
-            this.legendsConfig[key] = status;
-        })
+          this.legendsConfig[key] = status;
+      })
     }
 
     public handleTabChange(index: number) {
@@ -137,6 +157,38 @@ export class SpaceSetupComponent implements OnInit {
 
     onChangeSpaceStatus(e:any) {
         this.legendVisible = e.target.value;
+    }
+
+    public getSpaceForms(data: any) {
+      console.log(`Space Forms`, data);
+      const fileName = `FacilityA_FL1_09-01-202`;
+
+      let newFileName = fileName.slice(0, (fileName.length - 10));
+
+      data.filter((item: any) => {
+        item.spaceid = `${newFileName}_${item.spacenum}`
+      });
+
+      this.spaceForms = data;
+
+      console.log(this.spaceForms);
+    }
+
+    public getSpaceProfiles() {
+      this.spaces = dummy
+    }
+
+    public saveChanges() {
+      console.log(`spaceForms`, this.spaceForms);
+
+      this.spaceForms.filter((item: any) => this.spaces.push(item));
+      console.log(`New spaces =`, this.spaces);
+      this.countSpaces();
+      this.clearCurrentSpaces();
+    }
+
+    viewLegends() {
+      this.dialog.open(CustomModalComponent)
     }
 }
 
@@ -256,624 +308,6 @@ const dummy = [
         1,
         3,
         5
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 5,
-      "floorplanid": 5,
-      "spacefunction": "Production",
-      "spacetype": "C",
-      "spacenum": "5.74D",
-      "spacetenant": "TGP",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        4,
-        0,
-        3,
-        2,
-        5
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 6,
-      "floorplanid": 6,
-      "spacefunction": "Production",
-      "spacetype": "B",
-      "spacenum": "5.72A",
-      "spacetenant": "BPO",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        5,
-        3,
-        0
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 7,
-      "floorplanid": 7,
-      "spacefunction": "Room",
-      "spacetype": "A",
-      "spacenum": "5.68C",
-      "spacetenant": "TGP",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        2,
-        3,
-        5,
-        4,
-        0
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 8,
-      "floorplanid": 8,
-      "spacefunction": "Room",
-      "spacetype": "D",
-      "spacenum": "5.68H",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        0,
-        2,
-        4
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 9,
-      "floorplanid": 9,
-      "spacefunction": "Production",
-      "spacetype": "D",
-      "spacenum": "5.65C",
-      "spacetenant": "BPO",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        4,
-        0,
-        1,
-        6
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 10,
-      "floorplanid": 10,
-      "spacefunction": "Production",
-      "spacetype": "C",
-      "spacenum": "5.91C",
-      "spacetenant": "GS",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        5,
-        0,
-        4,
-        6
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 11,
-      "floorplanid": 11,
-      "spacefunction": "Room",
-      "spacetype": "D",
-      "spacenum": "5.82D",
-      "spacetenant": "GS",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        5,
-        2,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 12,
-      "floorplanid": 12,
-      "spacefunction": "Room",
-      "spacetype": "C",
-      "spacenum": "5.79C",
-      "spacetenant": "Blank",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        3,
-        2,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 13,
-      "floorplanid": 13,
-      "spacefunction": "Production",
-      "spacetype": "B",
-      "spacenum":  "5.79E",
-      "spacetenant": "TGP",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        0,
-        4,
-        1,
-        6,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 14,
-      "floorplanid": 14,
-      "spacefunction": "Room",
-      "spacetype": "D",
-      "spacenum":  "5.77A",
-      "spacetenant": "Blank",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        3,
-        5
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 15,
-      "floorplanid": 15,
-      "spacefunction": "Room",
-      "spacetype": "D",
-      "spacenum":  "5.77B",
-      "spacetenant": "GS",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        2,
-        6,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 16,
-      "floorplanid": 16,
-      "spacefunction": "Production",
-      "spacetype": "B",
-      "spacenum":  "5.77C",
-      "spacetenant": "GS",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        4,
-        5,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 17,
-      "floorplanid": 17,
-      "spacefunction": "Production",
-      "spacetype": "A",
-      "spacenum":  "5.77D",
-      "spacetenant": "TGP",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        3,
-        5,
-        6,
-        2,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 18,
-      "floorplanid": 18,
-      "spacefunction": "Room",
-      "spacetype": "B",
-      "spacenum":  "5.77E",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        5,
-        4,
-        2
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 19,
-      "floorplanid": 19,
-      "spacefunction": "Production",
-      "spacetype": "C",
-      "spacenum":  "5.75A",
-      "spacetenant": "Blank",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        0,
-        5,
-        6,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 20,
-      "floorplanid": 20,
-      "spacefunction": "Production",
-      "spacetype": "D",
-      "spacenum":  "5.75B",
-      "spacetenant": "BPO",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        0
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 21,
-      "floorplanid": 21,
-      "spacefunction": "Room",
-      "spacetype": "A",
-      "spacenum":  "5.75C",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        3,
-        5,
-        2,
-        4,
-        0,
-        1,
-        6
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 22,
-      "floorplanid": 22,
-      "spacefunction": "Room",
-      "spacetype": "C",
-      "spacenum":  "5.75D",
-      "spacetenant": "TGP",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        0,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 23,
-      "floorplanid": 23,
-      "spacefunction": "Production",
-      "spacetype": "D",
-      "spacenum":  "5.73A",
-      "spacetenant": "Blank",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        5,
-        1,
-        2,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 24,
-      "floorplanid": 24,
-      "spacefunction": "Room",
-      "spacetype": "B",
-      "spacenum":  "5.73B",
-      "spacetenant": "TGP",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        2,
-        4,
-        3,
-        0,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 25,
-      "floorplanid": 25,
-      "spacefunction": "Room",
-      "spacetype": "B",
-      "spacenum":  "5.73C",
-      "spacetenant": "Blank",
-      "spacestatus": "Vacant",
-      "spacegradelvl": "Compressed",
-      "spaceassignability": "Flexible",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        5,
-        1
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 26,
-      "floorplanid": 26,
-      "spacefunction": "Room",
-      "spacetype": "B",
-      "spacenum":  "5.73D",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        0,
-        4,
-        2
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 27,
-      "floorplanid": 27,
-      "spacefunction": "Room",
-      "spacetype": "B",
-      "spacenum":  "5.73E",
-      "spacetenant": "TGP",
-      "spacestatus": "Offline",
-      "spacegradelvl": "As_Designed",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        6,
-        0,
-        5,
-        3
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 28,
-      "floorplanid": 28,
-      "spacefunction": "Production",
-      "spacetype": "D",
-      "spacenum":  "5.73F",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Fixed",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        1,
-        6,
-        0
-      ],
-      "shiftstart": "",
-      "endstart": "",
-      "numofallowableproj": 5,
-      "numofallowableresource": 5,
-      "gaphours": 0,
-      "svgid": "svg1380"
-    },
-    {
-      "spaceid": 29,
-      "floorplanid": 29,
-      "spacefunction": "Production",
-      "spacetype": "B",
-      "spacenum":  "5.71A",
-      "spacetenant": "Blank",
-      "spacestatus": "Offline",
-      "spacegradelvl": "Partition_Loss",
-      "spaceassignability": "Blocked",
-      "allowableweeklyschedule": "",
-      "seatutilizationtime": "",
-      "daysavailability": [
-        5,
-        3
       ],
       "shiftstart": "",
       "endstart": "",
