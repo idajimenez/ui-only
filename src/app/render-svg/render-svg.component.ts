@@ -1,3 +1,4 @@
+import { TestServicesService } from './../services/test-services.service';
 declare var Snap: any;
 declare var mina: any;
 
@@ -27,15 +28,33 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
-    constructor() { 
+    constructor(
+      public testService: TestServicesService
+    ) {
         // document.addEventListener('mousemove', (event) => {
         //     console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
         // });
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.downloadSvg();
+        let x = await this.data;
+        console.log(x);
+        // !IMPORTANT
+        // THIS FUNCTION REFRESH WHAT EVERY INSIDE THE RESPONSE EVERYTIME YOU TRIGGER THE PASSDATA FUNCTION
+        this.testService.liveAutoRefresh().subscribe(() => {
+          this.getData();
+        })
+        // END
     }
+
+    // !IMPORTANT
+    // GETTING THE TEMP DATA FROM THE SERVICE
+    async getData() {
+      let data = await this.testService.tempData;
+      console.log(data);
+    }
+    // END
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.legendVisible) {
@@ -82,7 +101,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         const el = document!.getElementById('svg')!
 
         el.innerHTML = this.downloadedSvg;
-        
+
         console.log(el.firstElementChild!.id);
 
         const svg = el.getElementsByTagName('svg');
@@ -98,7 +117,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         
         this.setSpaceCount && this.setSpaceCount!(rect.length);
         const defaultLegend = Object.keys(this.legends).find((value: string) => this.legends[value].isDefault);
-        
+
         rect.forEach(item => {
             ids.push(item.id);
             // General styles
@@ -107,7 +126,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
             // DEFAULT COLOR FOR SPACE STATUS
             item.style.fill = '#A100FF';
             item.innerHTML = `<p>${item.id}</p>`;
-            
+
             this.handleConfig(item, defaultLegend!);
 
             item.addEventListener('click', this.onItemClick.bind(this))
@@ -145,41 +164,41 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         // var mat = svg.querySelector('g');
         var mat = s.rect(s.selectAll('g'));
         var set = s.g(s.selectAll('rect'));
-    
+
         var box: any;
-        
+
         //set that will receive the selected items
         var selections = s.group();
-        
+
         //DRAG FUNCTIONS
         //when mouse goes down over background, start drawing selection box
         function dragstart (x: any, y: any, event: any) {
             console.log(x, y, event)
-            box = s.rect(x, y, 0, 0).attr("stroke", "#9999FF");    
+            box = s.rect(x, y, 0, 0).attr("stroke", "#9999FF");
         }
-        
+
         //when mouse moves during drag, adjust box. If to left or above original point, you have to translate the whole box and invert the dx or dy values since .rect() doesn't take negative width or height
         function dragmove (dx: number, dy: number, x: any, y: any, event: any) {
             var xoffset = 0,
                 yoffset = 0;
-                
+
             if (dx < 0) {
                 xoffset = dx;
                 dx = -1 * dx;
             }
-            
+
             if (dy < 0) {
                 yoffset = dy;
                 dy = -1 * dy;
             }
-            
+
             box.transform("T" + xoffset + "," + yoffset);
-            box.attr("width", dx);    
-            box.attr("height", dy);  
-            box.attr("fill", "none");  
+            box.attr("width", dx);
+            box.attr("height", dy);
+            box.attr("fill", "none");
         }
-        
-        
+
+
         function dragend (event: any) {
             //get the bounds of the selections
             var bounds = box.getBBox();
@@ -191,7 +210,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
                 //here, we want to get the x,y vales of each object regardless of what sort of shape it is, but rect uses rx and ry, circle uses cx and cy, etc
                 //so we'll see if the bounding boxes intercept instead
                 var mybounds = el.getBBox();
-                
+
                 //do bounding boxes overlap?
                 //is one of this object's x extremes between the selection's xextremes?
                 if (Snap.path.isBBoxIntersect(mybounds, bounds)) {
@@ -207,8 +226,8 @@ export class RenderSvgComponent implements OnInit, OnChanges {
             selections.attr("opacity", 0.5);
             console.log(selections.selectAll('rect').items[0].node)
         }
-        
-        
+
+
         function reset () {
             //empty selections and reset opacity;
             var items = selections.selectAll("*");

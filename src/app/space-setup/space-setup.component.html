@@ -2,13 +2,13 @@
     <div class="space-setup__card">
         <div class="space-setup__content">
             <div class="space-setup__content__header">
-                <p class="space-setup__content__header-title">SPACE SETUP</p>
+                <p class="space-setup__content__header-title" (click)="addData()">SPACE SETUP</p>
             </div>
 
             <div class="space-setup__layout">
                 <div class="space-setup__layout__tabs">
                     <div
-                        *ngFor="let item of floorPlans; let i = index" 
+                        *ngFor="let item of floorPlans; let i = index"
                         class="space-setup__layout__tab-item"
                         [class.--active-tab]="i === activeTabIndex"
                         (click)="handleTabChange(i)">
@@ -40,11 +40,21 @@
                             <div class="space-setup__layout__content-details__title">SPACES LEGEND</div>
 
                             <div>
-                                <select (change)="onChangeSpaceStatus($event)">
+                                <select class="space-select" (change)="onChangeSpaceStatus($event)">
                                     <option value="spaceassignability">Space Assignability</option>
                                     <option value="spacetenant">Space Tenant</option>
                                     <option value="spacestatus">Space Status</option>
                                 </select>
+                            </div>
+
+                            <div class="viewOccupantsContent" *ngIf="legendVisible === 'spacestatus'">
+                              <label class="viewOccupantsContent__label" (click)="viewLegends()">
+                                <span class="material-icons eye-icon">
+                                  visibility
+                                </span>
+                                <mat-icon>home</mat-icon>
+                                  view occupants legend
+                              </label>
                             </div>
 
                             <div class="space-setup__layout__content-details__space-count__legend" *ngFor="let visible of legendsConfig[legendVisible] | keyvalue;">
@@ -52,7 +62,16 @@
                                     <div
                                         class="space-setup__layout__content-details__space-count__legend-color"
                                         [ngStyle]="visible.value.legend"
-                                        ></div>
+                                        [hidden]="visible.key === 'Occupied'">
+                                    </div>
+                                    <div *ngIf="visible.key === 'Occupied'">
+                                      <div class="row" style="height: 15px; width: 15px; margin-right: 5px">
+                                        <div class="col-sm-6 ctl"></div>
+                                        <div class="col-sm-6 ctr"></div>
+                                        <div class="col-sm-6 cbl"></div>
+                                        <div class="col-sm-6 cbr"></div>
+                                      </div>
+                                    </div>
                                 </div>
                                 <div class="space-setup__layout__content-details__space-count__legend-value"><b>{{visible.value.count}}</b> {{visible.key}}</div>
                             </div>
@@ -60,6 +79,28 @@
 
                         <div class="space-setup__layout__content-details__space-changes --wrapper">
                             <div class="space-setup__layout__content-details__title">FLOOR CAPACITY</div>
+
+                            <div class="space-setup__layout__content-details__body">
+                              <label>
+                                TOTAL PRODUCTION SPACES
+                              </label><br>
+                              <span>497</span><br>
+                              <label>
+                                CAPACITY THRESHOLD
+                              </label><br>
+                              <div>
+                                <select class="space-select">
+                                    <option value="100%">100%</option>
+                                    <option value="90%">90%</option>
+                                    <option value="80%">80%</option>
+                                </select>
+                              </div>
+                              <label>
+                                ALLOWABLE
+                              </label><br>
+                              <span>149</span>
+                            </div>
+
 
                             <!-- <div class="space-setup__layout__content-details__space-changes__item" *ngFor="let change of floorPlans[activeTabIndex].changes;">
                                 <div>
@@ -85,14 +126,15 @@
 
                         <div class="--wrapper">
                             <div class="space-setup__layout__content-details__title">SPACE PROFILE</div>
-                            
+
+
                             <div *ngIf="selectedSpace; else elseBlock">
                                 <div class='space-profile__divider'></div>
                                 <app-space-profile-preview [selectedSpace]="selectedSpace"></app-space-profile-preview>
                             </div>
                             <ng-template #elseBlock>
                                 <div class='space-profile__divider mb-1'></div>
-                                <app-space-profile-form [currentSpaces]="currentSpaces"></app-space-profile-form>
+                                <app-space-profile-form (spaceForms)="getSpaceForms($event)" [currentSpaces]="currentSpaces"></app-space-profile-form>
                             </ng-template>
                         </div>
                     </div>
@@ -101,8 +143,9 @@
         </div>
 
         <div class="space-setup__buttons">
-            <button>PREVIOUS</button>
-            <button (click)="handleUpdateNewSpaces()">SAVE & CONTINUE</button>
+            <button class="btn btn-secondary-outline" (click)="countSpaces()">PREVIOUS</button>
+            <button class="btn btn-primary" (click)="saveChanges()">SAVE CHANGES</button>
+            <button class="btn btn-secondary" (click)="handleUpdateNewSpaces()">SAVE</button>
         </div>
     </div>
 </div>

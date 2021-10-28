@@ -12,7 +12,7 @@
                         class="floor-plan-preview__layout__tab-item"
                         [class.--active-tab]="i === activeTabIndex"
                         (click)="handleTabChange(i)">
-                        <p class="floor-plan-preview__layout__tab-item__title">{{item.isUploaded ? '[Uploaded] ' : ''}}{{item.fileName}}</p>
+                        <div class="floor-plan-preview__layout__tab-item__title">{{item.isUploaded ? '[Uploaded] ' : ''}}{{item.fileName}}</div>
                         <div class="floor-plan-preview__status" [class.--next]="!item.isUploaded" ></div>
                     </div>
                 </div>
