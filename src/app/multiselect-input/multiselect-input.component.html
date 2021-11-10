@@ -1,0 +1,24 @@
+<div
+    class="multiselect-input"
+    [class.-limit]="adjacentSpaceData.isMax">
+    <div *ngIf="!adjacentSpaceData.spaces || !adjacentSpaceData.spaces.length" class="multiselect-input__placeholder">
+        No set adjacent spaces
+    </div>
+
+    <div
+        *ngIf="adjacentSpaceData.spaces && adjacentSpaceData.spaces.length"
+        class="multiselect-input__wrapper">
+        <div *ngFor="let value of adjacentSpaceData.spaces; let i = index;" class="multiselect-input__item">
+            <span>{{value}}</span>
+
+            <span
+                class="material-icons multiselect-input__item-icon"
+                (click)="handleRemoveItem(i)">
+                close
+            </span>
+        </div>
+    </div>
+</div>
+<div class="multiselect-input__limit" *ngIf="adjacentSpaceData.isMax">
+    You can only set up to 4 spaces
+</div>

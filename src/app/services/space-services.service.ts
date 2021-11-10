@@ -5,7 +5,7 @@ import { Observable, Observer, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TestServicesService {
+export class SpaceService {
 
   // !IMPORTANT
   // THIS FUNCTION IS FOR LIVE REFRESH FOR GETTING THE DATA
@@ -15,14 +15,20 @@ export class TestServicesService {
   }
   // END
 
-  public tempData: any;
+  public tempData: any = {
+    isAdjacentEnabled: false,
+    spaces: [],
+    selectedSpace: null,
+    isMax: false
+  };
 
   constructor() { }
 
   // !IMPORTANT
   // FUNCTION FOR PASSING THE DATA INTO TEMP DATA VAR
   passData(data?: any) {
-    this.tempData = data;
+    this.tempData = {...this.tempData, ...data};
+    console.log('data', this.tempData)
     this._liveRefreshData$.next();
   }
   // END

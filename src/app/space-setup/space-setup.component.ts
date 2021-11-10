@@ -1,9 +1,9 @@
-import { TestServicesService } from './../services/test-services.service';
+import { SpaceService } from '../services/space-services.service';
 import { Component, OnInit, ViewChild, Pipe } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 import { SpaceProfileFormComponent } from '../space-profile-form/space-profile-form.component';
 import { Observable } from 'rxjs';
+import { AddLocationComponent } from '../add-location/add-location.component';
 
 interface ILegend {
     [key: string]: {
@@ -80,7 +80,7 @@ export class SpaceSetupComponent implements OnInit {
 
     constructor(
       private dialog: MatDialog,
-      private testService: TestServicesService
+      private spaceService: SpaceService
     ) { }
 
     ngOnInit(): void {
@@ -92,7 +92,7 @@ export class SpaceSetupComponent implements OnInit {
       let data = {
         isAdjacentEnabled: true
       }
-      this.testService.passData(data);
+      this.spaceService.passData(data);
     }
     // END
 
@@ -188,7 +188,7 @@ export class SpaceSetupComponent implements OnInit {
     }
 
     viewLegends() {
-      this.dialog.open(CustomModalComponent)
+      // this.dialog.open(CustomModalComponent)
     }
 }
 

@@ -1,0 +1,167 @@
+.mat-dialog-title {
+    color: #460073;
+    font-size: 15px;
+    font-weight: 800;
+
+    .closeIcon {
+        float: right;
+        color: black !important;
+        font-size: 30px !important;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+.mat-dialog-content {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btnContainer {
+    float: right;
+    font-family: 'Graphik';
+
+    .btnCancel {
+        border: none;
+        height: 30px;
+        border-radius: 3px;
+        border: 1px solid #A100FF;
+        background-color: transparent;
+        cursor: pointer;
+        min-width: 75px;
+        outline: none;
+        font-size: 11px;
+        font-weight: normal;
+        line-height: normal;
+        text-align: center; 
+        color: #460073;
+        padding: 9px;
+
+        &:hover {
+            color: #ffffff;
+            background-color: #A100FF;
+            border: 3px #A100FF;
+        }
+    }
+    
+    
+    .btnConfirmation {
+        height: 30px;
+        border-radius: 3px;
+        border: 3px #00378a;
+        background-color: #460073;
+        cursor: pointer;
+        min-width: 75px;
+        outline: none;
+        padding: 0 15px !important;
+    }
+    
+    .btnConfirmation:hover{
+        color: #ced4da;
+        background-color: #A100FF;
+        border: 3px #A100FF;
+    }
+    
+    .btnConfirmationLabel {
+        font-size: 11px;
+        font-weight: normal;
+        line-height: normal;
+        text-align: center;
+        color: #ffffff;
+        padding-top: 9px;
+        
+    }
+
+}
+
+.toastContainer {
+    height: 70px;
+    border-radius: 3px;
+    background-color: rgba(227,76,76,.05);
+    border: 1px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    white-space: pre-line;
+}
+
+// for toaster content
+.iconContainer {
+    width: 45px;
+    height: 69px;
+    border-radius: 1.5px;
+    background-color: gray;
+}
+
+.toaster-icon {
+    color: #FFFFFF !important;
+    padding: 24px 15px;
+    font-size: 18px;
+}
+
+.border-success {
+    border-color: #01d801 !important;
+}
+
+.border-danger {
+    border-color: #E34C4C !important;
+}
+
+.border-info {
+    border-color: #0275D8 !important;
+}
+
+.border-warning {
+    border-color: #F7B422 !important;
+}
+
+.bg-success {
+    background-color: #01d801 !important;
+}
+
+.bg-danger {
+    background-color: #E34C4C !important;
+}
+
+.bg-warning {
+    background-color: #F7B422 !important;
+}
+
+.bg-info {
+    background-color: #0275D8 !important;
+}
+
+.dialogContent {
+    white-space: pre-line;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+}
+
+.removePadding {
+    padding: 0 !important;
+}
+
+
+.toastText {
+    height: 16px;
+    font-family: Graphik;
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-align: left;
+    color: #212529;
+    padding-left: 13px;
+}
+
+
+
+

@@ -7,6 +7,30 @@
         <div class='space-profile-form__function--title'>
             <label>SPACE FUNCTION</label>
         </div>
+        <app-multiselect-input></app-multiselect-input>
+    </div>
+
+    <div
+        class="space-profile-form__toggle-adjacent"
+        [class.-disabled]="currentSpaces.length > 1"
+        (click)='enableAdjacentSpace(true)'
+        *ngIf="!adjacentSpaceData.isAdjacentEnabled">
+        <span class="space-profile-form__toggle-adjacent-icon material-icons">
+            widgets
+        </span>
+        <span>SET ADJACENT SPACES</span>
+    </div>
+    <div class="space-profile-form__toggle-adjacent" (click)='enableAdjacentSpace(false)'  *ngIf="adjacentSpaceData.isAdjacentEnabled">
+        <span class="space-profile-form__toggle-adjacent-icon -done material-icons">
+            done
+        </span>
+        <span>DONE SETTING</span>
+    </div>
+
+    <div class='space-profile-form__function'>
+        <div class='space-profile-form__function--title'>
+            <label>SPACE FUNCTION</label>
+        </div>
         <div class='space-profile-form__options'>
             <div
                 class='space-profile-form__options-item'

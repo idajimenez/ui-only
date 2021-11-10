@@ -1,0 +1,100 @@
+:host(select-list) {
+    width: 30%;
+}
+
+.select-list {
+    color: #212529;
+
+    &__label {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &__new {
+        display: flex;
+        flex-direction: column;
+        padding: 12px 0;
+
+        &-input {
+            border: 1px solid #CED4DA;
+            border-radius: 3px;
+            height: 50px;
+            font-size: 14px;
+            padding: 14px;
+
+            &:focus {
+                border-color: #A100FF;
+                outline: none;
+            }
+
+            &::placeholder {
+                color: #999999;
+                opacity: 1;
+            }
+        }
+
+        &-button {
+            width: 93px;
+            height: 40px;
+            background-color: #460073;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: flex-end;
+            border-radius: 3px;
+            margin: 10px 0;
+
+            &:hover {
+                background-color: #A100FF;
+            }
+        }
+    }
+
+    &__divider {
+        border-top: 1px solid #CED4DA;
+
+        margin-bottom: 20px;
+    }
+
+    &__main {
+        border: 1px solid #CED4DA;
+
+        &-title {
+            border-bottom: 2px solid #CED4DA;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        &-content {
+            height: 250px;
+            overflow-y: scroll;
+
+            &__option {
+                height: 50px;
+                cursor: pointer;
+                border-bottom: 1px solid #CED4DA;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 18px;
+                font-size: 14px;
+                
+                &:hover {
+                    background-color: #F7F7F9;
+                }
+
+                &-icon {
+                    color: #6C757D;
+                    font-size: 32px;
+                }
+            }
+        }
+    }
+}

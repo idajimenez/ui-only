@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>
+    {{ data?.title ? (data?.title | uppercase) : 'Sample Title' | uppercase }}
+    <div class="closeIcon" (click)="cancel()">
+        &times;
+    </div>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div *ngIf="iconData" class="toastContainer border-{{ iconData?.status }}">
+        <div class="iconContainer bg-{{ iconData?.status }}">
+            <i class="{{ iconData?.icon }} toaster-icon"></i>
+        </div>
+        <label class="toastText" [innerHTML]="iconData?.content"></label>
+    </div>
+    <p class="dialogContent" [ngClass]="{'removePadding': iconData?.content}">{{ data?.content ? data?.content : '' }}</p>
+    <ng-template #target></ng-template>
+</mat-dialog-content>
+<mat-dialog-actions class="btnContainer" *ngIf="data.title != 'MULTI SESSIONS DETECTED'">
+    <button class="btnCancel" (click)="cancel()">
+        <p class="btnCancelLabel">{{ data?.cancelText ? (data?.cancelText | uppercase) : 'cancel' | uppercase }}</p>
+    </button>&nbsp;
+    <button class="btnConfirmation" (click)="confirm()">
+        <p class="btnConfirmationLabel">{{ data?.confirmationText ? (data?.confirmationText | uppercase) : 'ok' | uppercase }}</p>
+    </button>
+</mat-dialog-actions>
+
+<mat-dialog-actions class="btnContainer" *ngIf="data.title == 'MULTI SESSIONS DETECTED'">
+    <button class="btnCancel" (click)="redirect()">
+        <p class="btnCancelLabel">{{ data?.cancelText ? (data?.cancelText | uppercase) : 'back to list' | uppercase }}</p>
+    </button>&nbsp;
+    <button class="btnConfirmation" (click)="retry()">
+        <p class="btnConfirmationLabel">{{ data?.confirmationText ? (data?.confirmationText | uppercase) : 'retry' | uppercase }}</p>
+    </button>
+</mat-dialog-actions>

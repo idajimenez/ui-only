@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatInputModule} from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,9 @@ import { SpaceProfileFormComponent } from './space-profile-form/space-profile-fo
 import { SpaceProfilePreviewComponent } from './space-profile-preview/space-profile-preview.component';
 import { NumberInputComponent } from './number-input/number-input.component';
 import { DigitOnlyDirective } from './digit-only.directive';
+import { MultiselectInputComponent } from './multiselect-input/multiselect-input.component';
+import { AddLocationComponent } from './add-location/add-location.component';
+import { SelectListComponent } from './select-list/select-list.component';
 
 
 @NgModule({
@@ -37,7 +41,10 @@ import { DigitOnlyDirective } from './digit-only.directive';
     SpaceProfileFormComponent,
     SpaceProfilePreviewComponent,
     NumberInputComponent,
-    DigitOnlyDirective
+    DigitOnlyDirective,
+    MultiselectInputComponent,
+    AddLocationComponent,
+    SelectListComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +62,8 @@ import { DigitOnlyDirective } from './digit-only.directive';
     MatButtonToggleModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

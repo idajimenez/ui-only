@@ -1,0 +1,48 @@
+.multiselect-input {
+    border: 1px solid #CED4DA;
+    border-radius: 3px;
+    min-height: 50px;
+    padding: 10px;
+    font-size: 14px;
+    color: #FFF;
+
+    &.-limit {
+        border-color: #E34C4C;
+    }
+
+    &__placeholder {
+        color: #999999;
+        padding: 6px 4px;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        background-color: #A100FF;
+        border-radius: 3px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 45%;
+        margin-right: 5px;
+
+        &:nth-child(3), &:nth-child(4) {
+            margin-top: 4px;
+        }
+
+        &-icon {
+            font-size: 14px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    }
+
+    &__limit {
+        margin-top: 6px;
+        color: #E34C4C;
+    }
+}

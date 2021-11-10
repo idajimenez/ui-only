@@ -251,7 +251,37 @@
         }
     }
 
+    &__toggle-adjacent {
+        font-size: 10px;
+        color: #460B73;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        cursor: pointer;
 
+        &:hover:not(.-disbaled) {
+            color: #A100FF;
+        }
+
+        &.-disabled {
+            cursor: unset;
+            color: #e3e3e3;
+
+            &:hover {
+                cursor: unset;
+                color: #e3e3e3;
+            }
+        }
+
+        &-icon {
+            font-size: 11px;
+            margin-right: 3px;
+
+            &.-done {
+                font-size: 12px;
+            }
+        }
+    }
 }
 
 mat-form-field {

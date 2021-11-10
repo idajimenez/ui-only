@@ -1,0 +1,29 @@
+<div class='select-list'>
+    <div class='select-list__label'>
+        ADD {{type}}
+    </div>
+    <div class='select-list__new'>
+        <input
+            class='select-list__new-input'
+            placeholder='Enter {{type}} name'
+            (change)="handleChange($event)" />
+        <div class='select-list__new-button' (click)="sendNewEntry()">ADD</div>
+    </div>
+
+    <div class='select-list__divider'></div>
+
+    <div class='select-list__main'>
+        <div class='select-list__main-title'>
+            LIST OF {{type === 'city' ? 'CITIES' : type === 'floor' ? 'FLOORS' : 'FACILITY'}}
+        </div>
+        <div class='select-list__main-content'>
+            <div class='select-list__main-content__option' *ngFor='let option of options;'>
+                {{option[type]}}
+
+                <span class="material-icons select-list__main-content__option-icon">
+                    chevron_right
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

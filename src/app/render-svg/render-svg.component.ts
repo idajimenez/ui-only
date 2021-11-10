@@ -1,4 +1,4 @@
-import { TestServicesService } from './../services/test-services.service';
+import { SpaceService } from '../services/space-services.service';
 declare var Snap: any;
 declare var mina: any;
 
@@ -28,8 +28,10 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     public isDownloadingSvg: boolean = true;
     public isDownloadError: boolean = false;
 
+    public adjacentSpaceData: any = {};
+
     constructor(
-      public testService: TestServicesService
+      public spaceService: SpaceService
     ) {
         // document.addEventListener('mousemove', (event) => {
         //     console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
@@ -39,10 +41,10 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     async ngOnInit() {
         this.downloadSvg();
         let x = await this.data;
-        console.log(x);
+        // console.log(x);
         // !IMPORTANT
         // THIS FUNCTION REFRESH WHAT EVERY INSIDE THE RESPONSE EVERYTIME YOU TRIGGER THE PASSDATA FUNCTION
-        this.testService.liveAutoRefresh().subscribe(() => {
+        this.spaceService.liveAutoRefresh().subscribe(() => {
           this.getData();
         })
         // END
@@ -51,8 +53,8 @@ export class RenderSvgComponent implements OnInit, OnChanges {
     // !IMPORTANT
     // GETTING THE TEMP DATA FROM THE SERVICE
     async getData() {
-      let data = await this.testService.tempData;
-      console.log(data);
+      let data = await this.spaceService.tempData;
+      this.adjacentSpaceData = data;
     }
     // END
 
@@ -62,7 +64,6 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         }
 
         if (changes.currentSpaces) {
-            console.log(changes.currentSpaces, this.currentSpaces)
             this.handleHighlightSelected();
         }
     }
@@ -73,7 +74,12 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
         rect.forEach((space) => {
             const index = this.currentSpaces.findIndex((item) => item === space.id);
-            
+            const textEl = document.getElementById(`text-${space.id}`);
+
+            if (textEl) {
+                textEl.style.fill = index !== -1 ? '#FFF' : '#A100FF';
+            }
+
             if (index !== -1) {
                 space.style.fill = '#7500C0';
             } else {
@@ -91,7 +97,6 @@ export class RenderSvgComponent implements OnInit, OnChanges {
             this.setupSvgElements();
             this.isDownloadingSvg = false;
         } catch (err) {
-            console.log(err)
             this.isDownloadError = true;
             this.isDownloadingSvg = false;
         }
@@ -102,8 +107,6 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
         el.innerHTML = this.downloadedSvg;
 
-        console.log(el.firstElementChild!.id);
-
         const svg = el.getElementsByTagName('svg');
         // el.firstElementChild!.style.width = '100%';
         // svg[0].setAttribute("viewBox", "150 30 330 290");
@@ -112,6 +115,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         svg[0].style.height = '100%';
         svg[0].style.width = '100%';
         const rect = el.querySelectorAll('rect');
+        const g = el.querySelectorAll('g');
 
         let ids: string[] = [];
         
@@ -122,12 +126,16 @@ export class RenderSvgComponent implements OnInit, OnChanges {
             ids.push(item.id);
             // General styles
             item.style.cursor = 'pointer';
-
             // DEFAULT COLOR FOR SPACE STATUS
             item.style.fill = '#A100FF';
-            item.innerHTML = `<p>${item.id}</p>`;
 
-            this.handleConfig(item, defaultLegend!);
+            const textColor = this.handleConfig(item, defaultLegend!);
+
+            const textEl = this.createTextElement(item, textColor);
+            const textNode = document.createTextNode(item.id);
+
+            textEl.appendChild(textNode);
+            g[0].append(textEl);
 
             item.addEventListener('click', this.onItemClick.bind(this))
         })
@@ -136,7 +144,34 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         // this.addDragListener(el.firstElementChild!);
     }
 
+    // setSpaceText = (textColor: string, id: string) => {
+    //     const textEl = document.getElementById(`text-${id}`);
+            
+    //     if (textEl) {
+    //         textEl.style.fill = '#FFF';
+    //     }
+    // }
+
+    createTextElement = (item: any, textColor: string) => {
+        const x = item.x.animVal.value;
+        const y = item.y.animVal.value;
+        const height = item.height.animVal.value;
+        const width = item.width.animVal.value;
+
+        const svgNS = "http://www.w3.org/2000/svg";
+        const newText = document.createElementNS(svgNS,"text");
+        newText.setAttributeNS(null,"x", `${Number(x) + ((width * 0.5) - 4)}`);     
+        newText.setAttributeNS(null,"y", `${Number(y) + (height / 1.9)}`); 
+        newText.setAttributeNS(null, "font-size", "3");
+        newText.setAttributeNS(null, "font-family", "sans-serif");
+        newText.setAttributeNS(null, 'fill', textColor);
+        newText.setAttributeNS(null, 'id', `text-${item.id}`);
+
+        return newText;
+    }
+
     handleConfig(item: any, defaultLegend: string) {
+        let textColor = '#ffff';
         if (this.legendVisible) {
             // CHECK IF SPACE HAS CONFIGURATION
             const dataIndex = this.data.findIndex((da: any) => da.spacenum === item.id);
@@ -148,11 +183,14 @@ export class RenderSvgComponent implements OnInit, OnChanges {
 
                 if (this.legends[defaultLegend].legend.border) {
                     item.style.stroke = '#A100FF';
+                    textColor = '#A100FF';
                 }
             }
         } else {
             item.style.fill = '#A100FF';
         }
+
+        return textColor;
     }
 
     public addDragListener(svg: Element) {
@@ -173,7 +211,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         //DRAG FUNCTIONS
         //when mouse goes down over background, start drawing selection box
         function dragstart (x: any, y: any, event: any) {
-            console.log(x, y, event)
+            // console.log(x, y, event)
             box = s.rect(x, y, 0, 0).attr("stroke", "#9999FF");
         }
 
@@ -224,7 +262,7 @@ export class RenderSvgComponent implements OnInit, OnChanges {
             // KUNIN MO UNG SELECTED rect DITO SA selections.. ito ung mga selected
             // naka object siya
             selections.attr("opacity", 0.5);
-            console.log(selections.selectAll('rect').items[0].node)
+            // console.log(selections.selectAll('rect').items[0].node)
         }
 
 
@@ -238,17 +276,54 @@ export class RenderSvgComponent implements OnInit, OnChanges {
         mat.drag(dragmove, dragstart, dragend);
 
         s.click(function(e: any){
-            console.log("You have clicked in the elipse", e);
+            // console.log("You have clicked in the elipse", e);
         });
     }
 
     public onItemClick(e: any) {
-        if (e.shiftKey) {
+        const spaceNumber = e.target.id;
+
+        if (e.shiftKey && !this.adjacentSpaceData.isAdjacentEnabled) {
             // trigger select + SHIFT key here
-            this.callbackFunction!(e.target.id, true);
+            this.callbackFunction!(spaceNumber, true);
             e.target.style.fill = '#7500C0';
+            const textEl = document.getElementById(`text-${spaceNumber}`);
+            
+            if (textEl) {
+                textEl.style.fill = '#FFF';
+            }
         } else {
-            this.callbackFunction!(e.target.id);
+            console.log('adjacent', this.adjacentSpaceData.isAdjacentEnabled)
+
+            if (this.adjacentSpaceData.isAdjacentEnabled) {
+                const adjacentSpaces = this.adjacentSpaceData.spaces;
+                console.log('isExist', adjacentSpaces.indexOf(spaceNumber))
+                if (adjacentSpaces.indexOf(spaceNumber) !== -1) {
+
+                } else {
+
+                    if (adjacentSpaces.length === 4) {
+                        this.spaceService.passData({
+                            isMax: true
+                        });
+                        return
+                    }
+
+                    e.target.style.fill = '#F7B422';
+                    const textEl = document.getElementById(`text-${spaceNumber}`);
+                    
+                    if (textEl) {
+                        textEl.style.fill = '#212529';
+                    }
+                    adjacentSpaces.push(spaceNumber);
+                    this.spaceService.passData({
+                        spaces: adjacentSpaces
+                    });
+                }
+            
+            } else {
+                this.callbackFunction!(spaceNumber);
+            }
         }
     }
 
