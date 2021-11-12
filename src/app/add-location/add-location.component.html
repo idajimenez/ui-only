@@ -1,5 +1,25 @@
 <div class="add-location">
-    <select-list [type]="'city'" [options]="cityOptions" [handleAdd]="handleAdd"></select-list>
-    <select-list [type]="'facility'"></select-list>
-    <select-list [type]="'floor'"></select-list>
+    <select-list 
+        [type]="'city'" 
+        [options]="getOptions('city')" 
+        [handleAdd]="handleAdd" 
+        [selected]="selectedCity"
+        [isDisabled]="false"
+        [setSelectedLocation]="setSelectedLocation"></select-list>
+    <select-list 
+        [type]="'facility'" 
+        [options]="getOptions('facility')" 
+        [handleAdd]="handleAdd"
+        [selected]="selectedFacility"
+        [isDisabled]="!selectedCity"
+        [parent]="'city'"
+        [setSelectedLocation]="setSelectedLocation"></select-list>
+    <select-list 
+        [type]="'floor'" 
+        [options]="getOptions('floor')" 
+        [handleAdd]="handleAdd"
+        [selected]="selectedFloor"
+        [isDisabled]="!selectedFacility"
+        [parent]="'facility'"
+        [setSelectedLocation]="setSelectedLocation"></select-list>
 </div>

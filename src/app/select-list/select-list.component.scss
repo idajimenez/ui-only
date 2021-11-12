@@ -16,6 +16,19 @@
         flex-direction: column;
         padding: 12px 0;
 
+        &-control {
+            display: flex;
+            justify-content: flex-end;
+
+            &__exist {
+                flex: 1;
+                padding-top: 5px;
+                color: #E34C4C;
+                text-transform: capitalize;
+                font-size: 14px;
+            }
+        }
+
         &-input {
             border: 1px solid #CED4DA;
             border-radius: 3px;
@@ -32,6 +45,14 @@
                 color: #999999;
                 opacity: 1;
             }
+
+            &:disabled {
+                background-color: #CED4DA;
+            }
+
+            &.exist {
+                border-color: #E34C4C;
+            }
         }
 
         &-button {
@@ -45,9 +66,20 @@
             align-self: flex-end;
             border-radius: 3px;
             margin: 10px 0;
+            cursor: pointer;
+
+            &.disbaled {
+                cursor: auto;
+                background-color: #CED4DA;
+                color: #6C757D;
+            }
 
             &:hover {
                 background-color: #A100FF;
+
+                &.disbaled {
+                    background-color: #CED4DA;
+                }
             }
         }
     }
@@ -83,11 +115,20 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0 18px;
+                padding-left: 18px;
+                padding-right: 10px;
                 font-size: 14px;
+
+                &.-floor {
+                    justify-content: center;
+                }
                 
                 &:hover {
                     background-color: #F7F7F9;
+                }
+
+                &.selected {
+                    background-color: #A100FF33;
                 }
 
                 &-icon {
@@ -95,6 +136,14 @@
                     font-size: 32px;
                 }
             }
+        }
+
+        &-placeholder {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
         }
     }
 }

@@ -5,9 +5,15 @@
     <div class='select-list__new'>
         <input
             class='select-list__new-input'
+            [class.exist]='isExisting'
+            [value]='newEntry'
             placeholder='Enter {{type}} name'
-            (change)="handleChange($event)" />
-        <div class='select-list__new-button' (click)="sendNewEntry()">ADD</div>
+            (change)="handleChange($event)"
+            [disabled]="isDisabled" />
+        <div class="select-list__new-control">
+            <div *ngIf='isExisting' class="select-list__new-control__exist">{{type}} already exist</div>
+            <div class='select-list__new-button' (click)="sendNewEntry()" [class.disbaled]="isDisabled">ADD</div>
+        </div>
     </div>
 
     <div class='select-list__divider'></div>
@@ -16,14 +22,30 @@
         <div class='select-list__main-title'>
             LIST OF {{type === 'city' ? 'CITIES' : type === 'floor' ? 'FLOORS' : 'FACILITY'}}
         </div>
-        <div class='select-list__main-content'>
-            <div class='select-list__main-content__option' *ngFor='let option of options;'>
-                {{option[type]}}
-
-                <span class="material-icons select-list__main-content__option-icon">
-                    chevron_right
-                </span>
+        <div class='select-list__main-content' *ngIf='options.length; else disbaledPlaceholder'>
+            <div *ngFor='let option of options;'>
+                <div
+                    class='select-list__main-content__option'
+                    (click)="handleSelectItem(option)"
+                    [class.selected]='selected === option'
+                    [class.-floor]='type === "floor"'>
+                    {{option}}
+                    
+                    <span class="material-icons select-list__main-content__option-icon" *ngIf="type !== 'floor'">
+                        chevron_right
+                    </span>
+                </div>
             </div>
+
         </div>
+        <ng-template #disbaledPlaceholder>
+            <div class='select-list__main-placeholder'>
+                <em *ngIf='isDisabled; else noExisting'>Please select a {{parent}}.</em>
+                <ng-template #noExisting>
+                    <em>No existing facilities found.</em>
+                </ng-template>
+            </div>
+        </ng-template>
+
     </div>
 </div>
